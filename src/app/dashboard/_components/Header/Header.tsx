@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }): React.ReactElement => {
         <div className="header--profile-image-wrapper">
             <Image
                 src={profileSrc}
-                alt={user?.name || "Profile"}
+                alt={user?.first_name || "Profile"}
                 fill
                 sizes="36px"
                 className="header--profile-image"
@@ -32,6 +32,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }): React.ReactElement => {
 
     return (
         <>
+            {/* Desktop */}
             <div className="header--main-container-large-screen">
                 <div className="header--search-container">
                     <input
@@ -43,6 +44,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }): React.ReactElement => {
                 <div className="header--profile-section">{ProfilePicture}</div>
             </div>
 
+            {/* Mobile — profile picture removed */}
             <div className="header--main-container-mobile-screen">
                 <div>
                     <LtaIcon />
@@ -54,7 +56,6 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }): React.ReactElement => {
                         placeholder="Search"
                     />
                 </div>
-                {ProfilePicture}
                 <button className="header--menu-btn" onClick={onMenuClick}>
                     <Image
                         src="/assets/icons/Menu_icon.svg"

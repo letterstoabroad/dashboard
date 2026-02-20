@@ -59,6 +59,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .sidebar--icon {
@@ -89,37 +90,46 @@
   font-weight: 700;
 }
 
+.sidebar--profile-avatar {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: #f0f0f0;
+}
+
+.sidebar--profile-avatar-img {
+  object-fit: cover;
+}
+
+.sidebar--overlay {
+  display: none;
+}
+
 @media (min-width: 768px) and (max-width: 1280px) {
   .sidebar--container-large-screen {
     width: 8rem;
     min-width: 8rem;
     padding: 1.5rem 1.5rem 1.5rem 0.5rem;
   }
+
   .sidebar--menu-text {
     display: none;
   }
+
   .sidebar--menu-label {
     text-align: center;
   }
+
   .sidebar--menu-item {
     justify-content: center;
   }
+
   .sidebar--logo-section {
     justify-content: center;
   }
-}
-
-@media (max-width: 499px) {
-  .sidebar--container-large-screen {
-    display: none;
-  }
-  .sidebar--container-mobile-screen {
-    display: none;
-  }
-}
-
-.sidebar--overlay {
-  display: none;
 }
 
 @media (max-width: 499px) {
@@ -156,6 +166,7 @@
     z-index: 101;
     transform: translateX(-100%);
     transition: transform 0.3s ease;
+    overflow-y: auto;
   }
 
   .sidebar--container-mobile-screen.open {
