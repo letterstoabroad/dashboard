@@ -36,34 +36,37 @@ const LTA_SUIT_ARRAY: LtaSuitItem[] = [
 
 const LtaSuit: React.FC = () => {
   return (
-    <div className="lta-suit--container">
-      {LTA_SUIT_ARRAY.map((item) => (
-        <div key={item.id} className="lta-suit--card">
-          <div className="lta-suit--header">
-            <p className="lta-suit--title">{item.title}</p>
-          </div>
+      <div className="lta-suit--wrapper">
+        <p className="lta-suit--heading">Explore LTA Suit</p>
+        <div className="lta-suit--container">
+          {LTA_SUIT_ARRAY.map((item) => (
+              <div key={item.id} className="lta-suit--card">
+                <div className="lta-suit--header">
+                  <p className="lta-suit--title">{item.title}</p>
+                </div>
 
-          <div className="lta-suit--image-container">
-            <Image
-              src={item.image}
-              alt={item.title}
-              fill
-              className="lta-suit--image"
-            />
-            <div className="lta-suit--access-tag">
-              <span className="lta-suit--access-text">
-                {item.accessDescription}
-              </span>
-            </div>
-            <div className="lta-suit--cta-wrapper">
-              <button className="lta-suit--cta-button">
-                <span className="lta-suit--cta-text">{item.buttonText}</span>
-              </button>
-            </div>
-          </div>
+                <div className="lta-suit--image-container">
+                  <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="lta-suit--image"
+                  />
+                  <div className="lta-suit--access-tag">
+                <span className="lta-suit--access-text">
+                  {item.accessDescription}
+                </span>
+                  </div>
+                  <div className="lta-suit--cta-wrapper">
+                    <button className="lta-suit--cta-button">
+                      <span className="lta-suit--cta-text">{item.buttonText}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+          ))}
         </div>
-      ))}
-    </div>
+      </div>
   );
 };
 

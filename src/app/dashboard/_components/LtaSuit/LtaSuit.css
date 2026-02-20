@@ -115,7 +115,28 @@
   letter-spacing: -0.2px;
 }
 
+
+.lta-suit--wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: fit-content;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .lta-suit--wrapper {
+    width: 100%;
+    flex-shrink: 1;
+  }
+}
+
 @media (max-width: 499px) {
+  .lta-suit--wrapper {
+    width: 100%;
+    flex-shrink: 1;
+  }
+
   .lta-suit--container {
     flex-direction: column;
     width: 100%;
@@ -123,14 +144,24 @@
     align-items: stretch;
     justify-content: flex-start;
   }
+
   .lta-suit--card {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
   }
+
   .lta-suit--image-container {
     width: 100%;
     height: auto;
     aspect-ratio: 16/9;
   }
+}
+.lta-suit--heading {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #242a33;
+  margin: 0;
 }
