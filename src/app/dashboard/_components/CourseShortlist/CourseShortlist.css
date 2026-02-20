@@ -1,0 +1,227 @@
+.shortlist--container {
+  display: flex;
+  gap: 1.5rem;
+  width: 80%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 20px;
+  min-height: 28rem;
+  align-items: flex-start;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.shortlist--container::-webkit-scrollbar {
+  display: none;
+}
+
+.shortlist--card {
+  position: relative;
+  width: 21rem;
+  aspect-ratio: 3 / 4;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  box-shadow: 0 8px 18px rgba(14, 24, 38, 0.18);
+}
+
+.shortlist--bg-wrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.shortlist--bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.shortlist--bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(55, 49, 70, 0.6) 100%
+  );
+}
+
+.shortlist--content-section {
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(10px);
+  padding: 10px 16px 14px;
+  border-top-left-radius: 18px;
+  border-top-right-radius: 18px;
+  border-bottom-left-radius: 22px;
+  border-bottom-right-radius: 22px;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.shortlist--content-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.shortlist--match-score {
+  font-family: "Rubik", sans-serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: 34px;
+  color: #f3f6fb;
+  line-height: 1;
+}
+
+.shortlist--days-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4px);
+}
+
+.shortlist--days-text {
+  font-family: var(--font-plus-jakarta-sans);
+  font-weight: 700;
+  font-size: 12px;
+  color: #f0f4fb;
+}
+
+.shortlist--content-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shortlist--uni-header {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.shortlist--uni-icon-wrapper {
+  --uni-icon-size: 34px;
+  width: var(--uni-icon-size);
+  min-width: var(--uni-icon-size);
+  flex: 0 0 var(--uni-icon-size);
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 0.76px solid #ececec;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shortlist--uni-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.shortlist--uni-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 48px;
+}
+
+.shortlist--uni-name {
+  margin: 0;
+  font-family: var(--font-plus-jakarta-sans);
+  font-weight: 600;
+  font-size: 13px;
+  color: #ffffff;
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.shortlist--uni-location {
+  margin: 0;
+  font-family: var(--font-plus-jakarta-sans);
+  font-weight: 500;
+  font-size: 12px;
+  color: #eaecef;
+  line-height: 1.2;
+}
+
+.shortlist--course-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shortlist--course-name {
+  margin: 0;
+  font-family: var(--font-plus-jakarta-sans);
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+  letter-spacing: 0.26px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.shortlist--course-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.shortlist--meta-item {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.shortlist--meta-text {
+  font-family: var(--font-plus-jakarta-sans);
+  font-weight: 500;
+  font-size: 11px;
+  color: #eaecef;
+}
+
+@media (max-width: 499px) {
+  .shortlist--container {
+    flex-direction: column;
+    width: 100%;
+    overflow-x: hidden;
+    height: auto;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  .shortlist--card {
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 3 / 4;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1280px) {
+  .shortlist--container {
+    width: 100%;
+    overflow-x: auto;
+  }
+}

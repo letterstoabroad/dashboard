@@ -1,0 +1,68 @@
+.ltaicon--container {
+  width: 100%;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.ltaicon--text {
+  color: #654e9f;
+  font-family: var(--font-anek-bangla);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 87%;
+  letter-spacing: 0.421px;
+}
+
+.ltaicon--logo {
+  width: 55px;
+  height: auto;
+}
+
+.ltaicon--text-mobile {
+  display: none;
+}
+
+@media (min-width: 768px) and (max-width: 1280px) {
+  .ltaicon--text {
+    display: none;
+  }
+  .ltaicon--logo {
+    width: 40px;
+    height: auto;
+  }
+  .ltaicon--text-mobile {
+    display: block;
+    color: #654e9f;
+    font-family: var(--font-anek-bangla);
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 87%;
+    letter-spacing: 0.421px;
+  }
+  .ltaicon--container {
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 499px) {
+  .ltaicon--text {
+    font-size: 13px;
+    letter-spacing: 0.276px;
+    text-wrap: nowrap;
+  }
+  .ltaicon--text-mobile {
+    display: none;
+  }
+  .ltaicon--logo {
+    width: 35px;
+    height: auto;
+  }
+  .ltaicon--container {
+    justify-content: flex-start;
+    gap: 0.5rem;
+    width: 100%;
+  }
+}
