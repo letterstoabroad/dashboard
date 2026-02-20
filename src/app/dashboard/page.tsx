@@ -13,6 +13,8 @@ import TestimonialCarousel from "@/app/dashboard/_components/Testimonials/Testim
 import MentorSessionCard from "@/app/dashboard/_components/MentorSessionCard/MentorSessionCard";
 import Stats from "@/app/dashboard/_components/Stats/Stats";
 import ApplicationsTable from "@/app/dashboard/_components/ApplicationsTable/ApplicationsTable";
+import LtaPlane from "@/app/dashboard/_components/LtaPlane/LtaPlane";
+import ZennaMascotShortlist from "@/app/dashboard/_components/ZennaMascotShortlist/ZennaMascotShortlist";
 
 function getGreeting(): string {
     const hour = new Date().getHours();
@@ -68,7 +70,10 @@ function DefaultLayout({ greeting }: { greeting: string }) {
     return (
         <>
             <h2 className="main--header-style">{greeting}</h2>
-            <CourseShortlist />
+            <div className="default--plane-shortlist-row">
+                <ZennaMascotShortlist />
+                <CourseShortlist />
+            </div>
             <div className="common--width-100">
                 <h3 className="main--sub-header-style">Explore LTA Suit</h3>
                 <LtaSuit />

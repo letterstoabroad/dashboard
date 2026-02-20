@@ -1,0 +1,16 @@
+.lta-mascot--image {
+  width: 243px;
+  height: 325px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .lta-mascot--image {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    object-position: left;
+  }
+}
