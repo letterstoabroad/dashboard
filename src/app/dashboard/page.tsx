@@ -46,7 +46,8 @@ function ConnectLayout({ greeting }: { greeting: string }) {
 function ZennaLayout({ greeting }: { greeting: string }) {
     return (
         <>
-            <div className="common--flex-row common--width-100 common--gap-1 common--align-start">
+            {/* Desktop: greeting + stats side by side. Mobile: stacked */}
+            <div className="zenna--greeting-stats-row">
                 <h2 className="main--header-style">{greeting}</h2>
                 <Stats />
             </div>
