@@ -75,8 +75,7 @@ const Calendar: React.FC = () => {
     const getEventsForDay = (day: number) => monthEvents.filter((e) => e.day === day);
 
     const totalCells = firstDay + daysInMonth;
-    const trailingEmpty = (7 - (totalCells % 7)) % 7;
-
+    const trailingEmpty = 42 - totalCells;
     if (loading) return <div className="calendar--container">Loading events...</div>;
 
     return (
