@@ -1,11 +1,26 @@
-.lta-suit--container {
-  gap: 1.5rem;
-  width: fit-content;
-  max-width: 100%;
+.lta-suit--wrapper {
   display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.lta-suit--heading {
+  font-family: var(--font-plus-jakarta-sans);
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #242a33;
+  margin: 0;
+}
+
+.lta-suit--container {
+  display: flex;
+  gap: 17px;
+  width: 100%;
+  max-width: 100%;
   overflow-x: auto;
-  justify-content: space-evenly;
-  align-items: center;
+  align-items: flex-start;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -18,43 +33,53 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 1rem;
+  gap: 0;
   padding: 4px;
   background: #ffffff;
-  border: 1.378px solid #f7f7f7;
+  border: 1.38px solid #f7f7f7;
   border-radius: 18px;
   box-shadow: 5px 8px 24.9px 0px rgba(237, 230, 214, 0.5);
-  width: fit-content;
+  width: 208px;
+  min-width: 208px;
+  height: 217px;
+  box-sizing: border-box;
+  flex-shrink: 0;
   position: relative;
+  overflow: hidden;
 }
 
 .lta-suit--header {
-  padding: 16px 16px 0 16px;
+  padding: 10px 10px 6px 10px;
   width: 100%;
+  flex-shrink: 0;
 }
 
 .lta-suit--title {
   font-family: var(--font-plus-jakarta-sans);
   font-weight: 600;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 13px;
+  line-height: 20px;
   color: #242a33;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lta-suit--image-container {
   position: relative;
-  width: 200px;
-  height: 145px;
-  border-radius: 18px;
+  width: 100%;
+  flex: 1;
+  border-radius: 14px;
   overflow: hidden;
+  min-height: 0;
 }
 
 .lta-suit--image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 18px;
+  border-radius: 14px;
 }
 
 .lta-suit--access-tag {
@@ -63,26 +88,28 @@
   left: 0;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(13.36px);
-  padding: 5px 10px;
-  border-top-right-radius: 42px;
-  border-bottom-right-radius: 42px;
+  padding: 4.92px 9.84px;
+  gap: 8.2px;
+  border-radius: 42.62px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .lta-suit--access-text {
+  font-family: var(--font-plus-jakarta-sans);
   font-weight: 500;
-  font-size: 11.5px;
+  font-size: 11px;
   line-height: 13px;
   color: #ebe8ef;
+  white-space: nowrap;
 }
 
 .lta-suit--cta-wrapper {
   position: absolute;
-  bottom: 12px;
+  bottom: 10px;
   left: 0;
-  right: 0.5rem;
+  right: 8px;
   display: flex;
   justify-content: flex-end;
 }
@@ -97,8 +124,8 @@
   border: 1.639px solid rgba(78, 73, 89, 0.65);
   cursor: pointer;
   background-image:
-    linear-gradient(rgba(77, 55, 131, 0.2) 0%, rgba(238, 227, 255, 0.2) 51.44%),
-    linear-gradient(90deg, rgb(107, 90, 137) 0%, rgb(107, 90, 137) 100%);
+          linear-gradient(rgba(77, 55, 131, 0.2) 0%, rgba(238, 227, 255, 0.2) 51.44%),
+          linear-gradient(90deg, rgb(107, 90, 137) 0%, rgb(107, 90, 137) 100%);
   box-shadow: inset 0px 2.459px 0.82px 0px #a392c7;
   transition: transform 0.2s ease;
 }
@@ -115,39 +142,30 @@
   letter-spacing: -0.2px;
 }
 
+/* ─── Mobile ──────────────────────────────────────────────────────────────────*/
 @media (max-width: 499px) {
   .lta-suit--container {
     flex-direction: column;
-    width: 100%;
-    max-width: 100%;
-    align-items: stretch;
-    justify-content: flex-start;
+    overflow: visible;
+    gap: 16px;
   }
+
   .lta-suit--card {
     width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
+    min-width: 100%;
+    height: 217px;
   }
-  .lta-suit--image-container {
+}
+/* ─── Tablet ──────────────────────────────────────────────────────────────────*/
+@media (min-width: 500px) and (max-width: 1280px) {
+  .lta-suit--container {
     width: 100%;
-    height: auto;
-    aspect-ratio: 16/9;
+    overflow-x: auto;
   }
 }
-
-.lta-suit--wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  width: fit-content;
+.lta-suit--lock-icon {
+  width: 12px;
+  height: 12px;
+  object-fit: contain;
   flex-shrink: 0;
-}
-
-.lta-suit--heading {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 24px;
-  color: #242a33;
-  margin: 0;
 }

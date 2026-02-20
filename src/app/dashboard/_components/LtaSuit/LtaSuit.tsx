@@ -8,6 +8,7 @@ interface LtaSuitItem {
   accessDescription: string;
   image: string;
   buttonText: string;
+  locked?: boolean;
 }
 
 const LTA_SUIT_ARRAY: LtaSuitItem[] = [
@@ -17,6 +18,7 @@ const LTA_SUIT_ARRAY: LtaSuitItem[] = [
     accessDescription: "Free For All",
     image: "/assets/images/course-shortlisting.png",
     buttonText: "Try Connect",
+    locked: false,
   },
   {
     id: 2,
@@ -24,6 +26,7 @@ const LTA_SUIT_ARRAY: LtaSuitItem[] = [
     accessDescription: "Free For All",
     image: "/assets/images/lta-connect.png",
     buttonText: "Watch video",
+    locked: false,
   },
   {
     id: 3,
@@ -31,6 +34,7 @@ const LTA_SUIT_ARRAY: LtaSuitItem[] = [
     accessDescription: "LTA Members Only",
     image: "/assets/images/lta-zenna.png",
     buttonText: "Watch video",
+    locked: true,
   },
 ];
 
@@ -52,11 +56,22 @@ const LtaSuit: React.FC = () => {
                       fill
                       className="lta-suit--image"
                   />
+
                   <div className="lta-suit--access-tag">
                 <span className="lta-suit--access-text">
                   {item.accessDescription}
                 </span>
+                    {item.locked && (
+                        <Image
+                            src="/assets/icons/locked.png"
+                            alt="Locked"
+                            width={12}
+                            height={12}
+                            className="lta-suit--lock-icon"
+                        />
+                    )}
                   </div>
+
                   <div className="lta-suit--cta-wrapper">
                     <button className="lta-suit--cta-button">
                       <span className="lta-suit--cta-text">{item.buttonText}</span>
