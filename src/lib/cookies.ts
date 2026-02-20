@@ -1,5 +1,3 @@
-// lib/cookies.ts
-
 const isClient = typeof window !== "undefined";
 
 export const setCookie = (name: string, value: string, days: number = 7) => {
