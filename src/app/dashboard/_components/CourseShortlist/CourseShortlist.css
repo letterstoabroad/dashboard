@@ -205,20 +205,22 @@
 
 @media (max-width: 499px) {
   .shortlist--container {
-    flex-direction: column;
+    flex-direction: column; /* Stacks them vertically */
     width: 100%;
-    overflow-x: hidden;
-    height: auto;
-    align-items: center;
-    gap: 1.5rem;
+    height: auto;           /* Crucial: lets the container grow */
+    min-height: auto;        /* Removes the 28rem desktop limit */
+    overflow: visible;      /* Prevents clipping */
+    gap: 20px;
+    padding: 0 0 50px 0;    /* Space at the bottom */
   }
+
   .shortlist--card {
     width: 100%;
     max-width: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1.2; /* Slightly shorter so they don't eat the whole screen */
+    flex-shrink: 0;
   }
 }
-
 @media (min-width: 768px) and (max-width: 1280px) {
   .shortlist--container {
     width: 100%;
