@@ -1,6 +1,8 @@
 import api from "@/lib/axios";
 import { setTokens } from "@/lib/cookies";
+import type { User } from "@/store/useStore";
 
+// remove the local User interface definition entirely
 export interface LoginPayload {
     email: string;
     password: string;
@@ -25,12 +27,6 @@ export interface SetPasswordResponse {
     access: string;
     refresh: string;
     user: User;
-}
-
-export interface User {
-    id: string;
-    email: string;
-    name: string;
 }
 
 export interface LoginResponse {
