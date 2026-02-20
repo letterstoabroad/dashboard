@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import "@/app/(auth)/auth.css";
 
 import AuthCard from "@/app/(auth)/_components/AuthCard";
-import { setPassword } from "@/lib/services/auth.service";
+import { handleSetPassword } from "@/actions/auth.actions";
 import useStore from "@/store/useStore";
 
 const SetPasswordForm: React.FC = (): React.ReactElement => {
@@ -45,19 +45,14 @@ const SetPasswordForm: React.FC = (): React.ReactElement => {
         setLoading(true);
         setError(null);
 
-        try {
-            const data = await setPassword({ uid, temp_token, password });
-            setUser(data.user);
+        const result = await handleSetPassword({ uid, temp_token, password });
+        if (result.success && result.data) {
+            setUser(result.data.user);
             router.push("/dashboard");
-        } catch (error: unknown) {
-            const message =
-                (error as any)?.response?.data?.error ||
-                (error as any)?.response?.data?.message ||
-                "Failed to set password. Please try again.";
-            setError(message);
-        } finally {
-            setLoading(false);
+        } else {
+            setError(result.error || "Failed to set password. Please try again.");
         }
+        setLoading(false);
     };
 
     return (
@@ -125,9 +120,9 @@ const SetPasswordForm: React.FC = (): React.ReactElement => {
                 className={`create-account-btn ${loading ? "disabled" : ""}`}
                 onClick={onSubmit}
             >
-        <span className="create-account-text">
-          {loading ? "Saving..." : "Set Password"}
-        </span>
+                <span className="create-account-text">
+                    {loading ? "Saving..." : "Set Password"}
+                </span>
             </div>
         </AuthCard>
     );

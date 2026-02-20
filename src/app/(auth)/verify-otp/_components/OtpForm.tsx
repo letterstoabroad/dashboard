@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import "@/app/(auth)/auth.css";
 
 import AuthCard from "@/app/(auth)/_components/AuthCard";
-import { sendOtp, verifyOtp } from "@/lib/services/auth.service";
+import { handleSendOtp, handleVerifyOtp } from "@/actions/auth.actions";
 
 const OtpForm: React.FC = (): React.ReactElement => {
     const router = useRouter();
@@ -20,28 +20,33 @@ const OtpForm: React.FC = (): React.ReactElement => {
     const [resending, setResending] = useState<boolean>(false);
     const [resendSuccess, setResendSuccess] = useState<boolean>(false);
 
-    const triggerSendOtp = async () => {
-        if (!email || !invite_token) {
-            setError("Invalid invite link. Please contact support.");
-            setSendingOtp(false);
-            return;
-        }
-
-        try {
-            await sendOtp({ email, invite_token });
-        } catch (error: unknown) {
-            const message =
-                (error as any)?.response?.data?.error ||
-                (error as any)?.response?.data?.message ||
-                "Failed to send OTP. Please try again.";
-            setError(message);
-        } finally {
-            setSendingOtp(false);
-        }
-    };
-
     useEffect(() => {
-        triggerSendOtp();
+        let cancelled = false;
+
+        const sendInitialOtp = async () => {
+            if (!email || !invite_token) {
+                if (!cancelled) {
+                    setError("Invalid invite link. Please contact support.");
+                    setSendingOtp(false);
+                }
+                return;
+            }
+
+            const result = await handleSendOtp({ email, invite_token });
+
+            if (!cancelled) {
+                if (!result.success) {
+                    setError(result.error || "Failed to send OTP. Please try again.");
+                }
+                setSendingOtp(false);
+            }
+        };
+
+        sendInitialOtp();
+
+        return () => {
+            cancelled = true;
+        };
     }, [email, invite_token]);
 
     const onResend = async () => {
@@ -50,18 +55,13 @@ const OtpForm: React.FC = (): React.ReactElement => {
         setResendSuccess(false);
         setOtp("");
 
-        try {
-            await sendOtp({ email, invite_token });
+        const result = await handleSendOtp({ email, invite_token });
+        if (result.success) {
             setResendSuccess(true);
-        } catch (error: unknown) {
-            const message =
-                (error as any)?.response?.data?.error ||
-                (error as any)?.response?.data?.message ||
-                "Failed to resend OTP. Please try again.";
-            setError(message);
-        } finally {
-            setResending(false);
+        } else {
+            setError(result.error || "Failed to resend OTP. Please try again.");
         }
+        setResending(false);
     };
 
     const onSubmit = async () => {
@@ -73,21 +73,15 @@ const OtpForm: React.FC = (): React.ReactElement => {
         setError(null);
         setResendSuccess(false);
 
-        try {
-            const data = await verifyOtp({ email, otp, invite_token });
-            // 👇 now passing uid + temp_token instead of email + temp_token
+        const result = await handleVerifyOtp({ email, otp, invite_token });
+        if (result.success && result.data) {
             router.push(
-                `/set-password?uid=${encodeURIComponent(data.uid)}&temp_token=${encodeURIComponent(data.temp_token)}`
+                `/set-password?uid=${encodeURIComponent(result.data.uid)}&temp_token=${encodeURIComponent(result.data.temp_token)}`
             );
-        } catch (error: unknown) {
-            const message =
-                (error as any)?.response?.data?.error ||
-                (error as any)?.response?.data?.message ||
-                "Invalid OTP. Please try again.";
-            setError(message);
-        } finally {
-            setLoading(false);
+        } else {
+            setError(result.error || "Invalid OTP. Please try again.");
         }
+        setLoading(false);
     };
 
     return (
@@ -127,9 +121,9 @@ const OtpForm: React.FC = (): React.ReactElement => {
                 className={`create-account-btn ${loading || sendingOtp || resending ? "disabled" : ""}`}
                 onClick={onSubmit}
             >
-        <span className="create-account-text">
-          {loading ? "Verifying..." : "Verify OTP"}
-        </span>
+                <span className="create-account-text">
+                    {loading ? "Verifying..." : "Verify OTP"}
+                </span>
             </div>
 
             <div

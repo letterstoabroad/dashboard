@@ -8,7 +8,7 @@ import {
     SetPasswordPayload,
     LoginResponse,
     OtpVerifyResponse,
-    SetPasswordResponse,
+    SetPasswordResponse, SendOtpPayload,
 } from "@/lib/services/auth.service";
 
 export const handleLogin = async (
