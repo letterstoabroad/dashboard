@@ -26,9 +26,11 @@ function ConnectLayout({ greeting }: { greeting: string }) {
     return (
         <>
             <h2 className="main--header-style">{greeting}</h2>
-            <div className="common--flex-row common--width-100 common--gap-1">
+            <div className="connect--lta-mentor-row">
                 <LtaSuit />
-                <MentorSessionCard />
+                <div className="common--flex-1">
+                    <MentorSessionCard />
+                </div>
             </div>
             <TestimonialCarousel />
             <div className="common--flex-col common--align-start common--justify-center common--gap-1 common--width-100 common--margin-top-auto">
@@ -49,7 +51,7 @@ function ZennaLayout({ greeting }: { greeting: string }) {
             </div>
             <div className="common--flex-row common--width-100 common--gap-1">
                 <LtaSuit />
-                <MentorSessionCard />
+
             </div>
             <ApplicationsTable />
             <TestimonialCarousel />
@@ -110,7 +112,7 @@ export default function DashboardPage(): React.ReactElement {
 
     const firstName = user?.first_name?.split(" ")[0] || "";
     const greeting = `${getGreeting()}${firstName ? `, ${firstName}` : ""}!`;
-    const platformType = user?.signup_platform_type || "connect";
+    const platformType = user?.signup_platform_type || "dashboard";
 
     const renderLayout = () => {
         switch (platformType) {
