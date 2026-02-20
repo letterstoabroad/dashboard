@@ -7,57 +7,60 @@ import axiosInstance from "@/lib/axios";
 import useStore from "@/store/useStore";
 
 export default function DashboardLayout({
-                                          children,
+                                            children,
                                         }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }): React.ReactElement {
-  const { setUser } = useStore();
-  const [loading, setLoading] = useState(true);
+    const { setUser } = useStore();
+    const [loading, setLoading] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axiosInstance.get("users/me/");
-        if (response.data?.data) {
-          setUser(response.data.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user profile:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const response = await axiosInstance.get("users/me/");
+                if (response.data?.data) {
+                    setUser(response.data.data);
+                }
+            } catch (error) {
+                console.error("Failed to fetch user profile:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    fetchUser();
-  }, [setUser]);
+        fetchUser();
+    }, [setUser]);
 
     if (loading) {
         return (
-            <div style={{
-                position: 'fixed',
-                inset: 0,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: "100vh",
-                width: "100vw",
-                backgroundColor: "#ffffff", // Ensures screen is white, not black
-                zIndex: 9999
-            }}>
+            <div
+                style={{
+                    position: "fixed",
+                    inset: 0,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100vh",
+                    width: "100vw",
+                    backgroundColor: "#ffffff",
+                    zIndex: 9999,
+                }}
+            >
                 <div className="layout--default-spinner" />
             </div>
         );
     }
 
-  return (
-      <div className="layout-container common--width-100">
-        <div className="common--flex-row common--width-100">
-          <Sidebar />
-          <div className="common--flex-col common--flex-1 common--gap-1">
-            <Header />
-            {children}
-          </div>
+    return (
+        <div className="layout-container common--width-100">
+            <div className="common--flex-row common--width-100">
+                <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+                <div className="common--flex-col common--flex-1 common--gap-1">
+                    <Header onMenuClick={() => setSidebarOpen(true)} />
+                    {children}
+                </div>
+            </div>
         </div>
-      </div>
-  );
+    );
 }
