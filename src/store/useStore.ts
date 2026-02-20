@@ -6,6 +6,7 @@ interface User {
     first_name: string;
     last_name: string;
     profile_picture: string;
+    signup_platform_type: string;
 }
 
 interface AuthState {
