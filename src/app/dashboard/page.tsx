@@ -43,7 +43,6 @@ function ConnectLayout({ greeting }: { greeting: string }) {
     );
 }
 
-// ─── Zenna Layout ─────────────────────────────────────────────────────────────
 function ZennaLayout({ greeting }: { greeting: string }) {
     return (
         <>
@@ -51,9 +50,9 @@ function ZennaLayout({ greeting }: { greeting: string }) {
                 <h2 className="main--header-style">{greeting}</h2>
                 <Stats />
             </div>
-            <div className="common--flex-row common--width-100 common--gap-1">
+            <div className="zenna--suit-plane-row">
                 <LtaSuit />
-
+                <LtaPlane />
             </div>
             <ApplicationsTable />
             <TestimonialCarousel />
@@ -64,7 +63,6 @@ function ZennaLayout({ greeting }: { greeting: string }) {
         </>
     );
 }
-
 // ─── Dashboard Layout ─────────────────────────────────────────────────────────
 function DefaultLayout({ greeting }: { greeting: string }) {
     return (
@@ -75,8 +73,8 @@ function DefaultLayout({ greeting }: { greeting: string }) {
                 <CourseShortlist />
             </div>
             <div className="common--width-100">
-                <h3 className="main--sub-header-style">Explore LTA Suit</h3>
                 <LtaSuit />
+                <LtaPlane />
             </div>
             <Calendar />
             <TestimonialCarousel />

@@ -232,17 +232,32 @@ body,
         transform: rotate(360deg);
     }
 }
-.default--plane-shortlist-row {
+.default--suit-plane-row {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    gap: 1rem;
+    align-items: flex-end;
+    gap: 18px;
     width: 100%;
 }
 
 @media (max-width: 768px) {
-    .default--plane-shortlist-row {
+    .default--suit-plane-row {
         flex-direction: column;
         align-items: flex-start;
+    }
+}
+
+
+.zenna--suit-plane-row {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .zenna--suit-plane-row {
+        flex-direction: column;
     }
 }
