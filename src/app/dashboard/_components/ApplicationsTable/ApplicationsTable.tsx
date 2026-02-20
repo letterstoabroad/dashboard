@@ -59,7 +59,6 @@ const ApplicationsTable: React.FC = () => {
     const [applications, setApplications] = useState<Application[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    const [searchKey, setSearchKey] = useState<string>("");
 
     useEffect(() => {
         if (!user?.id) return;
@@ -69,7 +68,6 @@ const ApplicationsTable: React.FC = () => {
         const fetchData = async () => {
             const result = await handleFetchApplications({
                 id: user.id,
-                search: searchKey,
             });
 
             if (cancelled) return;
@@ -90,21 +88,12 @@ const ApplicationsTable: React.FC = () => {
         return () => {
             cancelled = true;
         };
-    }, [user?.id, searchKey]);
+    }, [user?.id]);
 
     return (
         <div className="applications-table--container">
             <div className="applications-table--top">
                 <p className="applications-table--title">Applications</p>
-                <div className="applications-table--search-wrapper">
-                    <input
-                        type="text"
-                        className="applications-table--search"
-                        placeholder="Search..."
-                        value={searchKey}
-                        onChange={(e) => setSearchKey(e.target.value)}
-                    />
-                </div>
             </div>
 
             <div className="applications-table--wrapper">
