@@ -1,23 +1,63 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "@/app/dashboard/_components/Sidebar/Sidebar";
 import Header from "@/app/dashboard/_components/Header/Header";
+import axiosInstance from "@/lib/axios";
+import useStore from "@/store/useStore";
 
 export default function DashboardLayout({
-  children,
-}: {
+                                          children,
+                                        }: {
   children: React.ReactNode;
 }): React.ReactElement {
+  const { setUser } = useStore();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axiosInstance.get("users/me/");
+        if (response.data?.data) {
+          setUser(response.data.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user profile:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUser();
+  }, [setUser]);
+
+    if (loading) {
+        return (
+            <div style={{
+                position: 'fixed',
+                inset: 0,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh",
+                width: "100vw",
+                backgroundColor: "#ffffff", // Ensures screen is white, not black
+                zIndex: 9999
+            }}>
+                <div className="layout--default-spinner" />
+            </div>
+        );
+    }
+
   return (
-    <div className="layout-container common--width-100">
-      <div className="common--flex-row common--width-100">
-        <Sidebar />
-        <div className="common--flex-col common--flex-1 common--gap-1">
-          <Header />
-          {children}
+      <div className="layout-container common--width-100">
+        <div className="common--flex-row common--width-100">
+          <Sidebar />
+          <div className="common--flex-col common--flex-1 common--gap-1">
+            <Header />
+            {children}
+          </div>
         </div>
       </div>
-    </div>
   );
 }

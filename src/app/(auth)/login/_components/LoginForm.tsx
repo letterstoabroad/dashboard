@@ -28,9 +28,7 @@ const LoginForm: React.FC = (): React.ReactElement => {
         setError(null);
 
         const result = await handleLogin({ email, password });
-
-        if (result.success && result.data) {
-            setUser(result.data.user);
+        if (result.success) {
             router.push("/dashboard");
         } else {
             setError(result.error || "Something went wrong.");
