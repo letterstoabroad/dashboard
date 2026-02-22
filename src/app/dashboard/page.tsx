@@ -73,7 +73,7 @@ function DefaultLayout({ greeting }: { greeting: string }) {
                 <ZennaMascotShortlist />
                 <CourseShortlist />
             </div>
-            <div className="common--width-100">
+            <div className="zenna--suit-plane-row">
                 <LtaSuit />
                 <LtaPlane />
             </div>
