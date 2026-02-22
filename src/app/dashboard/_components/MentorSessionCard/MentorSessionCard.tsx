@@ -73,12 +73,6 @@ const MentorSessionCard: React.FC = () => {
             <p className="mentor-session--heading">Upcoming Mentoring Session</p>
 
             <div className="mentor-session--container">
-                {loading && (
-                    <div className="mentor-session--state-container">
-                        <div className="layout--default-spinner" />
-                    </div>
-                )}
-
                 {!loading && error && (
                     <div className="mentor-session--state-container">
                         <p className="mentor-session--placeholder-text">{error}</p>

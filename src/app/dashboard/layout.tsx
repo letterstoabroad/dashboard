@@ -12,7 +12,6 @@ export default function DashboardLayout({
     children: React.ReactNode;
 }): React.ReactElement {
     const { setUser } = useStore();
-    const [loading, setLoading] = useState(true);
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
@@ -25,32 +24,12 @@ export default function DashboardLayout({
             } catch (error) {
                 console.error("Failed to fetch user profile:", error);
             } finally {
-                setLoading(false);
+
             }
         };
 
         fetchUser();
     }, [setUser]);
-
-    if (loading) {
-        return (
-            <div
-                style={{
-                    position: "fixed",
-                    inset: 0,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    height: "100vh",
-                    width: "100vw",
-                    backgroundColor: "#ffffff",
-                    zIndex: 9999,
-                }}
-            >
-                <div className="layout--default-spinner" />
-            </div>
-        );
-    }
 
     return (
         <div className="layout-container common--width-100">
