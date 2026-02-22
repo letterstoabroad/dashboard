@@ -16,7 +16,6 @@ export const handleGetUpcomingBookedSlot = async (): Promise<
         const data = await getUpcomingBookedSlot();
         return { success: true, data };
     } catch (error) {
-        debugger
         console.error("handleGetUpcomingBookedSlot error:", error);
         return { success: false, error: "Failed to fetch upcoming session."+error };
     }
