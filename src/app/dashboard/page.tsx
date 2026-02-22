@@ -1,20 +1,27 @@
 "use client";
 
-import React from "react";
+import React, {useEffect, useState} from "react";
 import useStore from "@/store/useStore";
+import PageLoader from "@/components/PageLoader/PageLoader";
 
 import CourseShortlist from "@/app/dashboard/_components/CourseShortlist/CourseShortlist";
 import LtaSuit from "@/app/dashboard/_components/LtaSuit/LtaSuit";
 import Calendar from "@/app/dashboard/_components/Calendar/Calendar";
 import Footer from "@/app/dashboard/_components/Footer/Footer";
 import TestimonialCarousel from "@/app/dashboard/_components/Testimonials/TestimonialCarousel";
-
-// Placeholders — replace with real components when ready
 import MentorSessionCard from "@/app/dashboard/_components/MentorSessionCard/MentorSessionCard";
 import Stats from "@/app/dashboard/_components/Stats/Stats";
 import ApplicationsTable from "@/app/dashboard/_components/ApplicationsTable/ApplicationsTable";
 import LtaPlane from "@/app/dashboard/_components/LtaPlane/LtaPlane";
 import ZennaMascotShortlist from "@/app/dashboard/_components/ZennaMascotShortlist/ZennaMascotShortlist";
+
+import {handleGetShortlistedCourses} from "@/actions/course.actions";
+import {handleFetchApplications} from "@/actions/applications.actions";
+import {handleFetchStats} from "@/actions/stats.actions";
+
+import {ShortlistedCourse} from "@/lib/services/course.service";
+import {Application} from "@/lib/services/applications.service";
+import {StatsData} from "@/lib/services/stats.service";
 
 function getGreeting(): string {
     const hour = new Date().getHours();
@@ -23,88 +30,123 @@ function getGreeting(): string {
     return "Good Evening";
 }
 
+interface DashboardData {
+    courses: ShortlistedCourse[];
+    applications: Application[];
+    stats: StatsData | null;
+}
+
 // ─── Connect Layout ───────────────────────────────────────────────────────────
-function ConnectLayout({ greeting }: { greeting: string }) {
+function ConnectLayout({
+                           greeting,
+                           data,
+                       }: {
+    greeting: string;
+    data: DashboardData;
+}) {
     return (
         <>
             <h2 className="main--header-style">{greeting}</h2>
             <div className="connect--lta-mentor-row">
-                <LtaSuit />
+                <LtaSuit/>
                 <div className="common--flex-1">
-                    <MentorSessionCard />
+                    <MentorSessionCard/>
                 </div>
             </div>
-            <TestimonialCarousel />
-            <div className="common--flex-col common--align-start common--justify-center common--gap-1 common--width-100 common--margin-top-auto">
+            <TestimonialCarousel/>
+            <div
+                className="common--flex-col common--align-start common--justify-center common--gap-1 common--width-100 common--margin-top-auto">
                 <div className="main--footer-caption">Hear from our family</div>
-                <Footer />
+                <Footer/>
             </div>
         </>
     );
 }
 
-function ZennaLayout({ greeting }: { greeting: string }) {
+// ─── Zenna Layout ─────────────────────────────────────────────────────────────
+function ZennaLayout({
+                         greeting,
+                         data,
+                     }: {
+    greeting: string;
+    data: DashboardData;
+}) {
     return (
         <>
-            {/* Desktop: greeting + stats side by side. Mobile: stacked */}
             <div className="zenna--greeting-stats-row">
                 <h2 className="main--header-style">{greeting}</h2>
-                <Stats />
+                <Stats prefetchedData={data.stats}/>
             </div>
             <div className="zenna--suit-plane-row">
-                <LtaSuit />
-                <LtaPlane />
+                <LtaSuit/>
+                <LtaPlane/>
             </div>
-            <ApplicationsTable />
-            <TestimonialCarousel />
-            <div className="common--flex-col common--align-start common--justify-center common--gap-1 common--width-100 common--margin-top-auto">
+            <ApplicationsTable prefetchedData={data.applications}/>
+            <TestimonialCarousel/>
+            <div
+                className="common--flex-col common--align-start common--justify-center common--gap-1 common--width-100 common--margin-top-auto">
                 <div className="main--footer-caption">Hear from our family</div>
-                <Footer />
+                <Footer/>
             </div>
         </>
     );
 }
-// ─── Dashboard Layout ─────────────────────────────────────────────────────────
-function DefaultLayout({ greeting }: { greeting: string }) {
+
+// ─── Default Layout ───────────────────────────────────────────────────────────
+function DefaultLayout({
+                           greeting,
+                           data,
+                       }: {
+    greeting: string;
+    data: DashboardData;
+}) {
     return (
         <>
             <h2 className="main--header-style">{greeting}</h2>
             <div className="default--plane-shortlist-row">
-                <ZennaMascotShortlist />
-                <CourseShortlist />
+                <ZennaMascotShortlist/>
+                <CourseShortlist prefetchedData={data.courses}/>
             </div>
-            <div className="zenna--suit-plane-row">
-                <LtaSuit />
-                <LtaPlane />
+            <div className="default--suit-plane-row">
+                <LtaSuit/>
+                <LtaPlane/>
             </div>
-            <Calendar />
-            <TestimonialCarousel />
-            <div className="common--flex-col common--align-start common--justify-center common--gap-1 common--width-100 common--margin-top-auto">
+            <Calendar/>
+            <TestimonialCarousel/>
+            <div
+                className="common--flex-col common--align-start common--justify-center common--gap-1 common--width-100 common--margin-top-auto">
                 <div className="main--footer-caption">Hear from our family</div>
-                <Footer />
+                <Footer/>
             </div>
         </>
     );
 }
 
 // ─── Zenna + Connect Layout ───────────────────────────────────────────────────
-function ZennaAndConnectLayout({ greeting }: { greeting: string }) {
+function ZennaAndConnectLayout({
+                                   greeting,
+                                   data,
+                               }: {
+    greeting: string;
+    data: DashboardData;
+}) {
     return (
         <>
             <div className="common--flex-row common--width-100 common--gap-1 common--align-start">
                 <h2 className="main--header-style">{greeting}</h2>
-                <Stats />
+                <Stats prefetchedData={data.stats}/>
             </div>
             <div className="common--flex-row common--width-100 common--gap-1">
-                <LtaSuit />
-                <MentorSessionCard />
+                <LtaSuit/>
+                <MentorSessionCard/>
             </div>
-            <ApplicationsTable />
-            <Calendar />
-            <TestimonialCarousel />
-            <div className="common--flex-col common--align-start common--justify-center common--gap-1 common--width-100 common--margin-top-auto">
+            <ApplicationsTable prefetchedData={data.applications}/>
+            <Calendar/>
+            <TestimonialCarousel/>
+            <div
+                className="common--flex-col common--align-start common--justify-center common--gap-1 common--width-100 common--margin-top-auto">
                 <div className="main--footer-caption">Hear from our family</div>
-                <Footer />
+                <Footer/>
             </div>
         </>
     );
@@ -112,23 +154,75 @@ function ZennaAndConnectLayout({ greeting }: { greeting: string }) {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 export default function DashboardPage(): React.ReactElement {
-    const { user } = useStore();
+    const {user} = useStore();
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState<DashboardData>({
+        courses: [],
+        applications: [],
+        stats: null,
+    });
 
+    const platformType = user?.signup_platform_type || "dashboard";
     const firstName = user?.first_name?.split(" ")[0] || "";
     const greeting = `${getGreeting()}${firstName ? `, ${firstName}` : ""}!`;
-    const platformType = user?.signup_platform_type || "dashboard";
+
+    useEffect(() => {
+        if (!user?.id) return;
+
+        const fetchAll = async () => {
+            setLoading(true);
+
+            const fetches: Promise<void>[] = [];
+
+            const result: DashboardData = {
+                courses: [],
+                applications: [],
+                stats: null,
+            };
+
+            // Only fetch what the current layout needs
+            if (platformType === "dashboard") {
+                fetches.push(
+                    handleGetShortlistedCourses().then((r) => {
+                        if (r.success && r.data) result.courses = r.data.results;
+                    })
+                );
+            }
+
+            if (platformType === "zenna" || platformType === "zenna_and_connect") {
+                fetches.push(
+                    handleFetchApplications({id: user.id}).then((r) => {
+                        if (r.success && r.data) result.applications = r.data.results;
+                    }),
+                    handleFetchStats().then((r) => {
+                        if (r.success && r.data) result.stats = r.data;
+                    })
+                );
+            }
+
+            await Promise.all(fetches);
+            setData(result);
+            setLoading(false);
+        };
+
+        fetchAll();
+    }, [user?.id, platformType]);
+
+    if (loading) return <PageLoader/>;
+
+    const layoutProps = {greeting, data};
 
     const renderLayout = () => {
         switch (platformType) {
             case "connect":
-                return <ConnectLayout greeting={greeting} />;
+                return <ConnectLayout {...layoutProps} />;
             case "zenna":
-                return <ZennaLayout greeting={greeting} />;
+                return <ZennaLayout {...layoutProps} />;
             case "zenna_and_connect":
-                return <ZennaAndConnectLayout greeting={greeting} />;
+                return <ZennaAndConnectLayout {...layoutProps} />;
             case "dashboard":
             default:
-                return <DefaultLayout greeting={greeting} />;
+                return <DefaultLayout {...layoutProps} />;
         }
     };
 

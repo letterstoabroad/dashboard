@@ -12,28 +12,15 @@ const CARD_BG_COLORS: string[] = [
   "rgba(103, 26, 26, 0.2)",
 ];
 
-const CourseShortlist: React.FC = () => {
-  const [courses, setCourses] = useState<ShortlistedCourse[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+interface CourseShortlistProps {
+  prefetchedData?: ShortlistedCourse[];
+}
+
+const CourseShortlist: React.FC<CourseShortlistProps> = ({ prefetchedData }) => {
+  const [courses, setCourses] = useState<ShortlistedCourse[]>(prefetchedData ?? []);
+  const [loading, setLoading] = useState<boolean>(!prefetchedData);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      const result = await handleGetShortlistedCourses();
-      if (result.success && result.data) {
-        setCourses(result.data.results);
-      } else {
-        setError(result.error || "Something went wrong.");
-        setCourses([]);
-      }
-      setLoading(false);
-    };
-
-    fetchCourses();
-  }, []);
-
-  if (loading) return <div>Loading recommendations...</div>;
-  if (error) return <div>{error}</div>;
 
   return (
       <div className="shortlist--container">

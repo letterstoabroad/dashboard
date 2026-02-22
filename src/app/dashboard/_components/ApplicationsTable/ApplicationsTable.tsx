@@ -54,41 +54,11 @@ const handleViewFile = (file: string | null) => {
     window.open(file, "_blank");
 };
 
-const ApplicationsTable: React.FC = () => {
-    const { user } = useStore();
-    const [applications, setApplications] = useState<Application[]>([]);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+interface ApplicationsTableProps {
+    prefetchedData: Application[];
+}
 
-    useEffect(() => {
-        if (!user?.id) return;
-
-        let cancelled = false;
-
-        const fetchData = async () => {
-            const result = await handleFetchApplications({
-                id: user.id,
-            });
-
-            if (cancelled) return;
-
-            if (result.success && result.data) {
-                setApplications(result.data.results);
-                setError(null);
-            } else {
-                setError(result.error || "Failed to load applications.");
-                setApplications([]);
-            }
-            setLoading(false);
-        };
-
-        setLoading(true);
-        fetchData();
-
-        return () => {
-            cancelled = true;
-        };
-    }, [user?.id]);
+const ApplicationsTable: React.FC<ApplicationsTableProps> = ({ prefetchedData }) => {
 
     return (
         <div className="applications-table--container">
@@ -116,20 +86,12 @@ const ApplicationsTable: React.FC = () => {
                     </div>
 
                     {/* Body */}
-                    {loading ? (
-                        <div className="applications-table--empty">
-                            <p>Loading...</p>
-                        </div>
-                    ) : error ? (
-                        <div className="applications-table--empty">
-                            <p>{error}</p>
-                        </div>
-                    ) : applications.length === 0 ? (
+                    {prefetchedData.length === 0 ? (
                         <div className="applications-table--empty">
                             <p>No Applications Found</p>
                         </div>
                     ) : (
-                        applications.map((app) => (
+                        prefetchedData.map((app) => (
                             <div key={app.id} className="applications-table--row">
 
                                 {/* University + Course */}
