@@ -1,6 +1,6 @@
 .shortlist--container {
   display: flex;
-  gap: 1rem;
+  gap: 10px;
   width: 100%;
   max-width: 100%;
   overflow-x: auto;
@@ -16,9 +16,10 @@
 
 .shortlist--card {
   position: relative;
-  width: 208px;
-  height: 217px;
-  border-radius: 18px;
+  width: 273px;
+  min-width: 273px;
+  height: 317px;
+  border-radius: 22px;
   border: 1.378px solid #f7f7f7;
   overflow: hidden;
   flex-shrink: 0;
@@ -27,12 +28,15 @@
   justify-content: flex-end;
   box-shadow: 5px 8px 24.9px rgba(237, 230, 214, 0.5);
   background: #ffffff;
+  box-sizing: border-box;
 }
 
 .shortlist--bg-wrapper {
   position: absolute;
   inset: 0;
   z-index: 0;
+  border-radius: 22px;
+  overflow: hidden;
 }
 
 .shortlist--bg-image {
@@ -56,15 +60,13 @@
   z-index: 1;
   backdrop-filter: blur(10px);
   padding: 8px 10px 12px;
-  border-top-left-radius: 18px;
-  border-top-right-radius: 18px;
+  border-radius: 22px;
   height: 55%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 6px;
 }
-
 .shortlist--content-top {
   display: flex;
   justify-content: space-between;
@@ -135,6 +137,7 @@
   display: flex;
   flex-direction: column;
   gap: 1px;
+  min-width: 0;
 }
 
 .shortlist--uni-name {
@@ -199,27 +202,25 @@
   color: #eaecef;
 }
 
-/* ─── Mobile ─────────────────────────────────────────────────────────────────── */
+/* ─── Mobile ──────────────────────────────────────────────────────────────────*/
 @media (max-width: 499px) {
   .shortlist--container {
     flex-direction: column;
     width: 100%;
     height: auto;
-    min-height: auto;
     overflow: visible;
-    gap: 16px;
+    gap: 10px;
     padding: 0 0 24px 0;
   }
 
   .shortlist--card {
     width: 100%;
-    height: auto;
-    aspect-ratio: 208 / 217;
-    max-width: 100%;
+    min-width: 100%;
+    height: 317px;
   }
 }
 
-/* ─── Tablet ─────────────────────────────────────────────────────────────────── */
+/* ─── Tablet ──────────────────────────────────────────────────────────────────*/
 @media (min-width: 500px) and (max-width: 1280px) {
   .shortlist--container {
     width: 100%;
