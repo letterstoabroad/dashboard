@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import "@/app/(auth)/auth.css";
 
@@ -13,12 +13,14 @@ const OtpForm: React.FC = (): React.ReactElement => {
     const email = searchParams.get("email") || "";
     const invite_token = searchParams.get("invite_token") || "";
 
-    const [otp, setOtp] = useState<string>("");
+    const [digits, setDigits] = useState<string[]>(["", "", "", ""]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [sendingOtp, setSendingOtp] = useState<boolean>(true);
     const [resending, setResending] = useState<boolean>(false);
     const [resendSuccess, setResendSuccess] = useState<boolean>(false);
+
+    const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
     useEffect(() => {
         let cancelled = false;
@@ -49,11 +51,42 @@ const OtpForm: React.FC = (): React.ReactElement => {
         };
     }, [email, invite_token]);
 
+    const handleDigitChange = (index: number, value: string) => {
+        // Handle paste of full OTP
+        if (value.length > 1) {
+            const pasted = value.replace(/\D/g, "").slice(0, 4).split("");
+            const newDigits = ["", "", "", ""];
+            pasted.forEach((d, i) => {
+                newDigits[i] = d;
+            });
+            setDigits(newDigits);
+            const nextIndex = Math.min(pasted.length, 3);
+            inputRefs.current[nextIndex]?.focus();
+            return;
+        }
+
+        const digit = value.replace(/\D/g, "");
+        const newDigits = [...digits];
+        newDigits[index] = digit;
+        setDigits(newDigits);
+
+        if (digit && index < 3) {
+            inputRefs.current[index + 1]?.focus();
+        }
+    };
+
+    const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Backspace" && !digits[index] && index > 0) {
+            inputRefs.current[index - 1]?.focus();
+        }
+    };
+
     const onResend = async () => {
         setResending(true);
         setError(null);
         setResendSuccess(false);
-        setOtp("");
+        setDigits(["", "", "", ""]);
+        inputRefs.current[0]?.focus();
 
         const result = await handleSendOtp({ email, invite_token });
         if (result.success) {
@@ -65,7 +98,8 @@ const OtpForm: React.FC = (): React.ReactElement => {
     };
 
     const onSubmit = async () => {
-        if (!otp) {
+        const otp = digits.join("");
+        if (otp.length < 4) {
             setError("Please enter the OTP.");
             return;
         }
@@ -87,28 +121,40 @@ const OtpForm: React.FC = (): React.ReactElement => {
     return (
         <AuthCard>
             <div className="login-header-container">
-                <h1 className="login-header-text">Verify Your Account</h1>
+                <h1 className="login-header-text">Please Check Your Inbox</h1>
                 <p className="login-subheader-text">
-                    {sendingOtp
-                        ? "Sending OTP to your email..."
-                        : <> Enter the OTP sent to <strong>{email}</strong></>}
+                    {sendingOtp ? (
+                        "Sending OTP to your email..."
+                    ) : (
+                        <>
+                            Please enter the OTP we have sent to
+                            <br />
+                            <strong>{email}</strong>
+                        </>
+                    )}
                 </p>
             </div>
 
             <div className="login-form-container">
-                <div className="input-group">
-                    <label className="input-label">OTP Code</label>
-                    <div className="input-wrapper">
+                {/* OTP boxes */}
+                <div className="otp-input-row">
+                    {digits.map((digit, index) => (
                         <input
+                            key={index}
+                            ref={(el) => { inputRefs.current[index] = el; }}
                             type="text"
-                            placeholder="Enter OTP"
-                            className="input-field"
-                            value={otp}
+                            inputMode="numeric"
+                            autoComplete={index === 0 ? "one-time-code" : "off"}
+                            pattern="\d*"
                             maxLength={4}
+                            className="otp-input-box"
+                            value={digit}
                             disabled={sendingOtp || resending}
-                            onChange={(e) => setOtp(e.target.value)}
+                            onChange={(e) => handleDigitChange(index, e.target.value)}
+                            onKeyDown={(e) => handleKeyDown(index, e)}
+                            onFocus={(e) => e.target.select()}
                         />
-                    </div>
+                    ))}
                 </div>
 
                 {error && <p className="error-text">{error}</p>}
@@ -121,21 +167,19 @@ const OtpForm: React.FC = (): React.ReactElement => {
                 className={`create-account-btn ${loading || sendingOtp || resending ? "disabled" : ""}`}
                 onClick={onSubmit}
             >
-                <span className="create-account-text">
-                    {loading ? "Verifying..." : "Verify OTP"}
-                </span>
+        <span className="create-account-text">
+          {loading ? "Verifying..." : "Verify"}
+        </span>
             </div>
 
             <div
                 className={`resend-otp-link ${resending ? "disabled" : ""}`}
                 onClick={!resending ? onResend : undefined}
             >
-                {resending ? "Resending..." : "Didn't receive the OTP? Resend"}
+                Didn&apos;t get your code?{" "}
+                <strong>Send a new OTP</strong>
             </div>
-
-            <div className="back-link" onClick={() => router.push("/login")}>
-                ← Back to Login
-            </div>
+            
         </AuthCard>
     );
 };

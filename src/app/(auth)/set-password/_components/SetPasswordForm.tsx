@@ -48,7 +48,7 @@ const SetPasswordForm: React.FC = (): React.ReactElement => {
         const result = await handleSetPassword({ uid, temp_token, password });
         if (result.success && result.data) {
             setUser(result.data.user);
-            router.push("/dashboard");
+            router.push("/welcome");
         } else {
             setError(result.error || "Failed to set password. Please try again.");
         }

@@ -177,13 +177,6 @@
     font-family: "Plus Jakarta Sans", sans-serif;
 }
 
-.back-link {
-    font-size: 14px;
-    color: #242a33;
-    cursor: pointer;
-    margin-top: 12px;
-    font-family: "Inter", sans-serif;
-}
 
 .social-login-container {
     display: flex;
@@ -307,4 +300,42 @@
     font-size: 13px;
     margin-top: 4px;
     font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.otp-input-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 22.41px;
+    width: fit-content;
+}
+
+.otp-input-box {
+    box-sizing: border-box;
+    width: 110.19px;
+    height: 62.37px;
+    padding: 0px 15.59px;
+    background: #ffffff;
+    border: none;
+    border-bottom: 1px solid #c5cbd4;
+    border-radius: 12px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 29px;
+    color: #888c92;
+    text-align: center;
+    outline: none;
+    caret-color: #242a33;
+    transition: border-bottom-color 0.2s ease;
+}
+
+.otp-input-box:focus {
+    border-bottom-color: #654e9f;
+    color: #242a33;
+}
+
+.otp-input-box:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
