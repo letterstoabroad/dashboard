@@ -8,21 +8,19 @@ interface PageLoaderProps {
     minDuration?: number;
 }
 
-const PageLoader: React.FC<PageLoaderProps> = () => {
-
+const PageLoader: React.FC = () => {
     return (
         <div className="page-loader--overlay">
-            {/* Background glows */}
             <div className="page-loader--ellipse-1" />
             <div className="page-loader--ellipse-2" />
-            <div className="page-loader--glow-purple-right" />
             <div className="page-loader--glow-purple-left" />
+            <div className="page-loader--glow-purple-right" />
             <div className="page-loader--glow-dark" />
             <div className="page-loader--glow-warm" />
+            <div className="page-loader--glow-warm-lighter" />
             <div className="page-loader--glow-pink" />
             <div className="page-loader--glow-violet" />
 
-            {/* Center content */}
             <div className="page-loader--content">
                 <Image
                     src="/assets/icons/loading-logo.png"
@@ -42,12 +40,10 @@ const PageLoader: React.FC<PageLoaderProps> = () => {
                 />
             </div>
 
-            {/* Spinner at bottom */}
             <div className="page-loader--spinner-wrapper">
                 <div className="page-loader--spinner" />
             </div>
         </div>
     );
 };
-
 export default PageLoader;
