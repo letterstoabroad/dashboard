@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import "./Sidebar.css";
 import LtaIcon from "@/app/dashboard/_components/LtaIcon/LtaIcon";
 import useStore from "@/store/useStore";
+import { clearCookie } from "@/lib/cookies";
 
 interface SidebarItem {
     id: number;
@@ -26,13 +28,9 @@ interface SidebarProps {
 
 const MENU_ITEMS: SidebarItem[] = [
     { id: 1, label: "Dashboard", icon: "/assets/icons/HomeIcon.svg" },
-    // { id: 2, label: "Documents", icon: "/assets/icons/DocumentsIcon.svg" },
-    // { id: 3, label: "Notifications", icon: "/assets/icons/NotificationIcon.svg" },
-    // { id: 4, label: "Support", icon: "/assets/icons/SupportIcon.svg" },
 ];
 
 const BOTTOM_ITEMS: SidebarItem[] = [
-    // { id: 6, label: "Settings", icon: "/assets/icons/SettingsIcon.svg" },
     { id: 7, label: "Logout", icon: "/assets/icons/LogoutIcon.svg" },
 ];
 
@@ -95,8 +93,9 @@ const ProfileMenuItem: React.FC<{
 const SidebarContent: React.FC<{
     activeId: number;
     onItemClick: (id: number) => void;
+    onLogout: () => void;
     isMobile?: boolean;
-}> = ({ activeId, onItemClick, isMobile = false }) => (
+}> = ({ activeId, onItemClick, onLogout, isMobile = false }) => (
     <>
         <div className="sidebar--logo-section">
             <LtaIcon />
@@ -119,7 +118,6 @@ const SidebarContent: React.FC<{
                         />
                     ))}
 
-                    {/* Profile — mobile only */}
                     {isMobile && (
                         <ProfileMenuItem
                             isActive={activeId === 5}
@@ -133,15 +131,25 @@ const SidebarContent: React.FC<{
                 className="common--flex-col"
                 style={{ marginTop: "auto", gap: "4px" }}
             >
-                {BOTTOM_ITEMS.map((item) => (
-                    <SidebarOption
-                        key={item.id}
-                        icon={item.icon}
-                        label={item.label}
-                        isActive={activeId === item.id}
-                        onClick={() => onItemClick(item.id)}
-                    />
-                ))}
+                {BOTTOM_ITEMS.map((item) =>
+                    item.label === "Logout" ? (
+                        <SidebarOption
+                            key={item.id}
+                            icon={item.icon}
+                            label={item.label}
+                            isActive={false}
+                            onClick={onLogout}
+                        />
+                    ) : (
+                        <SidebarOption
+                            key={item.id}
+                            icon={item.icon}
+                            label={item.label}
+                            isActive={activeId === item.id}
+                            onClick={() => onItemClick(item.id)}
+                        />
+                    )
+                )}
             </div>
         </div>
     </>
@@ -149,6 +157,13 @@ const SidebarContent: React.FC<{
 
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
     const [activeId, setActiveId] = useState<number>(1);
+    const router = useRouter();
+
+    const handleLogout = () => {
+        clearCookie("token");
+        clearCookie("refresh_token");
+        router.push("/auth/login");
+    };
 
     const handleItemClick = (id: number) => {
         setActiveId(id);
@@ -159,7 +174,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
         <>
             {/* Desktop */}
             <div className="sidebar--container-large-screen">
-                <SidebarContent activeId={activeId} onItemClick={setActiveId} />
+                <SidebarContent
+                    activeId={activeId}
+                    onItemClick={setActiveId}
+                    onLogout={handleLogout}
+                />
             </div>
 
             {/* Mobile overlay backdrop */}
@@ -172,6 +191,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
                 <SidebarContent
                     activeId={activeId}
                     onItemClick={handleItemClick}
+                    onLogout={handleLogout}
                     isMobile
                 />
             </div>
