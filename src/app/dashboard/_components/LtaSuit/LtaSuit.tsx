@@ -55,6 +55,7 @@ const LtaSuit: React.FC = () => {
                       alt={item.title}
                       fill
                       className="lta-suit--image"
+                      priority
                   />
 
                   <div className="lta-suit--access-tag">

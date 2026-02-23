@@ -166,6 +166,15 @@ export default function DashboardPage(): React.ReactElement {
     const firstName = user?.first_name?.split(" ")[0] || "";
     const greeting = `${getGreeting()}${firstName ? `, ${firstName}` : ""}!`;
 
+    const preloadImage = (src: string): Promise<void> =>
+        new Promise((resolve) => {
+            const img = new window.Image();
+            img.src = src;
+            img.onload = () => resolve();
+            img.onerror = () => resolve(); // resolve anyway so we don't block
+        });
+
+
     useEffect(() => {
         if (!user?.id) return;
 
@@ -201,6 +210,16 @@ export default function DashboardPage(): React.ReactElement {
             }
 
             await Promise.all(fetches);
+            await Promise.all([
+                ...fetches,
+                preloadImage("/assets/images/Technical_University_of_Munich.png"),
+                preloadImage("/assets/images/course-shortlisting.png"),
+                preloadImage("/assets/images/lta-connect.png"),
+                preloadImage("/assets/images/lta-zenna.png"),
+                preloadImage("/assets/images/loading-logo.png"),
+                preloadImage("/assets/images/loading-supernova.png"),
+                // add any other images visible on first render
+            ]);
             setData(result);
             setLoading(false);
         };
