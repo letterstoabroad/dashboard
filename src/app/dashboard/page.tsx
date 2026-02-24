@@ -171,7 +171,8 @@ export default function DashboardPage(): React.ReactElement {
     const isOnboardingCompleted = user?.is_onboarding_completed ?? false;
     const isApproved = user?.is_approved ?? false;
     const hasAccess = isEmailVerified && isOnboardingCompleted && isApproved;
-    const effectivePlatformType = hasAccess ? "zenna_and_connect" : platformType;
+    const effectivePlatformType =
+        hasAccess && platformType === "connect" ? "zenna_and_connect" : platformType;
     const firstName = user?.first_name?.split(" ")[0] || "";
     const greeting = `${getGreeting()}${firstName ? `, ${firstName}` : ""}!`;
 
