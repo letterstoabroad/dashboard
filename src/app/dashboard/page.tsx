@@ -136,7 +136,7 @@ function ZennaAndConnectLayout({
 }) {
     return (
         <>
-            <div className="common--flex-row common--width-100 common--gap-1 common--align-start">
+            <div className="common--flex-row common--width-100 common--gap-1 common--align-start common--justify-between">
                 <h2 className="main--header-style">{greeting}</h2>
                 <Stats prefetchedData={data.stats}/>
             </div>
