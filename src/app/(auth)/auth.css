@@ -268,12 +268,8 @@
     border-radius: 44.1px;
     border: 1.4px solid rgba(78, 73, 89, 0.65);
     background:
-            linear-gradient(
-                    180deg,
-                    rgba(77, 55, 131, 0.2) 0%,
-                    rgba(238, 227, 255, 0.2) 51.44%
-            ),
-            #6b5a89;
+            linear-gradient(0deg, #D5CFE0, #D5CFE0),
+            linear-gradient(180deg, rgba(184, 170, 219, 0.2) 0%, rgba(255, 255, 255, 0.2) 51.44%);
     box-shadow: 0 2.1px 0.7px 0 #a392c7 inset;
     display: flex;
     justify-content: center;
@@ -352,11 +348,15 @@
     justify-content: center;
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    background: #ffffff;
+    background:
+            linear-gradient(0deg, #D5CFE0, #D5CFE0),
+            linear-gradient(180deg, rgba(184, 170, 219, 0.2) 0%, rgba(255, 255, 255, 0.2) 51.44%);
 }
 
 .social-btn.apple {
-    background: #535566;
+    background:
+            linear-gradient(0deg, #D5CFE0, #D5CFE0),
+            linear-gradient(180deg, rgba(184, 170, 219, 0.2) 0%, rgba(255, 255, 255, 0.2) 51.44%);
     border: none;
 }
 
