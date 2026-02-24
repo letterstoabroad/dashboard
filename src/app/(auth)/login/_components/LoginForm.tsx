@@ -7,12 +7,9 @@ import "@/app/(auth)/auth.css";
 
 import AuthCard from "@/app/(auth)/_components/AuthCard";
 import { handleLogin } from "@/actions/auth.actions";
-import useStore from "@/store/useStore";
 
 const LoginForm: React.FC = (): React.ReactElement => {
     const router = useRouter();
-    const { setUser } = useStore();
-
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [showPassword, setShowPassword] = useState<boolean>(false);

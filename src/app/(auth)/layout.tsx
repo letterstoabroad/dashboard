@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import "./auth.css";
 
 export default function AuthLayout({
@@ -16,9 +17,12 @@ export default function AuthLayout({
             </div>
             <div className="auth-shell">
                 <div className="auth-shell-logo">
-                    <img
+                    <Image
                         src="/assets/icons/white-logo.png"
                         alt="Letters to Abroad"
+                        width={160}
+                        height={48}
+                        priority
                     />
                 </div>
                 {children}

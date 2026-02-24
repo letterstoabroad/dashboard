@@ -19,32 +19,21 @@ const SignupOtpForm: React.FC = (): React.ReactElement => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [resending, setResending] = useState<boolean>(false);
-    const [resendReady, setResendReady] = useState<boolean>(true);
     const [timer, setTimer] = useState<number>(0);
 
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
     useEffect(() => {
-        let countdown: ReturnType<typeof setInterval> | null = null;
-        if (!resendReady) {
-            setTimer(30);
-            countdown = setInterval(() => {
-                setTimer((prev) => prev - 1);
-            }, 1000);
+        if (timer <= 0) {
+            return undefined;
         }
-
+        const countdown = setInterval(() => {
+            setTimer((prev) => Math.max(prev - 1, 0));
+        }, 1000);
         return () => {
-            if (countdown) {
-                clearInterval(countdown);
-            }
+            clearInterval(countdown);
         };
-    }, [resendReady]);
-
-    useEffect(() => {
-        if (timer <= 0 && !resendReady) {
-            setResendReady(true);
-        }
-    }, [timer, resendReady]);
+    }, [timer]);
 
     const handleDigitChange = (index: number, value: string) => {
         if (value.length > 1) {
@@ -76,7 +65,7 @@ const SignupOtpForm: React.FC = (): React.ReactElement => {
     };
 
     const onResend = async () => {
-        if (!email || !resendReady) {
+        if (!email || timer > 0) {
             return;
         }
         setResending(true);
@@ -86,7 +75,7 @@ const SignupOtpForm: React.FC = (): React.ReactElement => {
 
         const result = await handleResendSignupOtp({ email });
         if (result.success) {
-            setResendReady(false);
+            setTimer(30);
         } else {
             setError(result.error || "Failed to resend OTP.");
         }
@@ -160,10 +149,10 @@ const SignupOtpForm: React.FC = (): React.ReactElement => {
                 </div>
 
                 <div
-                    className={`resend-otp-link ${resending || !resendReady ? "disabled" : ""}`}
-                    onClick={!resending && resendReady ? onResend : undefined}
+                    className={`resend-otp-link ${resending || timer > 0 ? "disabled" : ""}`}
+                    onClick={!resending && timer === 0 ? onResend : undefined}
                 >
-                    {resendReady
+                    {timer === 0
                         ? "Didn't get your code? Send a new OTP"
                         : `Resend available in ${timer}s`}
                 </div>
