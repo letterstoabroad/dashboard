@@ -213,11 +213,11 @@ export default function DashboardPage(): React.ReactElement {
             await Promise.all([
                 ...fetches,
                 preloadImage("/assets/images/Technical_University_of_Munich.png"),
-                preloadImage("/assets/images/course-shortlisting.png"),
-                preloadImage("/assets/images/lta-connect.png"),
-                preloadImage("/assets/images/lta-zenna.png"),
-                preloadImage("/assets/images/loading-logo.png"),
-                preloadImage("/assets/images/loading-supernova.png"),
+                preloadImage("/assets/images/suit-shortlisting.png"),
+                preloadImage("/assets/images/suit-connect.png"),
+                preloadImage("/assets/images/suit-zenna.png"),
+                preloadImage("/assets/icons/loading-logo.png"),
+                preloadImage("/assets/icons/loading-supernova.png"),
                 // add any other images visible on first render
             ]);
             setData(result);
