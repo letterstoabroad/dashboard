@@ -8,7 +8,8 @@
             linear-gradient(115deg, #6b4a92 0%, #3c2754 38%, #241a33 100%);
     min-height: 100vh;
     width: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: clamp(28px, 6vw, 72px);
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -207,6 +208,7 @@
     line-height: 24px;
     letter-spacing: -0.02em;
     color: rgba(255, 255, 255, 0.85);
+    overflow-wrap: anywhere;
 }
 .input-group {
     display: flex;
@@ -429,16 +431,20 @@
 }
 
 .otp-input-row {
+    --otp-gap: 22.41px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    gap: 22.41px;
+    gap: var(--otp-gap);
     width: 100%;
 }
 
 .otp-input-box {
     box-sizing: border-box;
-    width: 110.19px;
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    max-width: 110.19px;
     height: 62.37px;
     padding: 0 15.59px;
     background: #ffffff;
@@ -481,5 +487,18 @@
     .login-outer-container {
         margin-left: 0;
         width: min(520px, 100%);
+    }
+}
+
+@media (max-width: 560px) {
+    .otp-input-row {
+        --otp-gap: 10px;
+    }
+
+    .otp-input-box {
+        max-width: none;
+        height: 56px;
+        padding: 0 8px;
+        font-size: 22px;
     }
 }
