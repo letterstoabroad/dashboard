@@ -473,6 +473,11 @@
         padding: clamp(110px, 14vw, 160px) 0 clamp(36px, 8vw, 64px);
     }
 
+    .auth-shell-logo {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
     .login-outer-container {
         margin-left: 0;
         width: min(520px, 100%);

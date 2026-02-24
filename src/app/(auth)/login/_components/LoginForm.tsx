@@ -90,9 +90,21 @@ const LoginForm: React.FC = (): React.ReactElement => {
                 className={`create-account-btn ${loading ? "disabled" : ""}`}
                 onClick={onSubmit}
             >
-        <span className="create-account-text">
-          {loading ? "Signing in..." : "Sign In"}
-        </span>
+                <span className="create-account-text">
+                    {loading ? "Signing in..." : "Sign In"}
+                </span>
+            </div>
+
+            <div className="login-footer">
+                <div className="sign-in-text">
+                    Don&apos;t have an account?{" "}
+                    <span
+                        className="sign-in-link"
+                        onClick={() => router.push("/signup")}
+                    >
+                        Sign Up
+                    </span>
+                </div>
             </div>
         </AuthCard>
     );
