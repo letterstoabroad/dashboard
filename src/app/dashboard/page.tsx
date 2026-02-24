@@ -136,11 +136,11 @@ function ZennaAndConnectLayout({
 }) {
     return (
         <>
-            <div className="common--flex-row common--width-100 common--gap-1 common--align-start common--justify-between">
+            <div className="zenna-connect--greeting-stats-row common--flex-row common--width-100 common--gap-1 common--align-start common--justify-between">
                 <h2 className="main--header-style">{greeting}</h2>
                 <Stats prefetchedData={data.stats}/>
             </div>
-            <div className="common--flex-row common--width-100 common--gap-1">
+            <div className="zenna-connect--suit-session-row common--flex-row common--width-100 common--gap-1">
                 <LtaSuit/>
                 <MentorSessionCard/>
             </div>

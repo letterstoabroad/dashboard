@@ -34,6 +34,12 @@
     box-sizing: border-box;
 }
 
+@media (max-width: 768px) {
+    .mentor-session--wrapper {
+        height: auto;
+    }
+}
+
 /* ─── Loading / Empty / Error states ────────────────────────────────────────── */
 .mentor-session--state-container {
     display: flex;

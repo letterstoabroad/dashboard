@@ -120,7 +120,7 @@ body,
     border-radius: 24px;
     background: rgba(255, 255, 255, 0.35);
     padding: 1rem;
-    gap: 2rem;
+    gap: 2.5rem;
     overflow-y: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -174,6 +174,12 @@ body,
 .common--flex-row {
     display: flex;
     flex-direction: row;
+}
+
+@media (max-width: 768px) {
+    .common--flex-row {
+        flex-wrap: wrap;
+    }
 }
 
 .common--flex-col {
@@ -276,6 +282,28 @@ body,
         flex-direction: column;
         align-items: flex-start;
     }
+}
+
+@media (max-width: 768px) {
+    .zenna-connect--greeting-stats-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .zenna-connect--greeting-stats-row > .stats--container {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .zenna-connect--suit-session-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.zenna-connect--suit-session-row > * {
+    flex: 1;
+    min-width: 0;
 }
 .default--plane-shortlist-row {
     display: flex;
