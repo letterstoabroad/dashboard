@@ -100,13 +100,17 @@ function DefaultLayout({
     greeting: string;
     data: DashboardData;
 }) {
+    const hasCourses = data.courses.length > 0;
+
     return (
         <>
             <h2 className="main--header-style">{greeting}</h2>
-            <div className="default--plane-shortlist-row">
-                <ZennaMascotShortlist/>
-                <CourseShortlist prefetchedData={data.courses}/>
-            </div>
+            {hasCourses && (
+                <div className="default--plane-shortlist-row">
+                    <ZennaMascotShortlist/>
+                    <CourseShortlist prefetchedData={data.courses}/>
+                </div>
+            )}
             <div className="default--suit-plane-row">
                 <LtaSuit/>
                 <LtaPlane/>
