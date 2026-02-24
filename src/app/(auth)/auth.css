@@ -1,26 +1,15 @@
-.auth-logo {
-    display: flex;
-    align-items: center;
-}
 .layout-container-login {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     background:
-            url(/public/assets/images/Symbo.svg) no-repeat top left / 50%,
-            linear-gradient(
-                    172deg,
-                    #ccc4dc -15.87%,
-                    #e5dfdf -7.37%,
-                    #f6f3eb 33.95%,
-                    #fff 68.38%
-            ),
-            url(/public/assets/images/background.png) lightgray -19.54px -266.052px /
-      102.714% 71.608% no-repeat;
-    height: 100vh;
+            radial-gradient(120% 120% at 18% 12%, rgba(236, 165, 216, 0.35) 0%, rgba(46, 30, 66, 0) 55%),
+            linear-gradient(115deg, #6b4a92 0%, #3c2754 38%, #241a33 100%);
+    min-height: 100vh;
     width: 100%;
     overflow: hidden;
-    padding: 1rem;
+    padding: clamp(28px, 6vw, 72px);
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
@@ -29,16 +18,91 @@
     display: none;
 }
 
+.layout-container-login > *:not(.auth-bg) {
+    position: relative;
+    z-index: 1;
+}
+
+.auth-shell {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: calc(100vh - 2 * clamp(28px, 6vw, 72px));
+}
+
+.auth-shell-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+}
+
+.auth-shell-logo img {
+    width: clamp(120px, 12vw, 160px);
+    height: auto;
+}
+
+.auth-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.auth-ellipse {
+    position: absolute;
+    width: clamp(260px, 45vw, 524px);
+    height: clamp(230px, 40vw, 465px);
+    filter: blur(clamp(90px, 12vw, 168px));
+    opacity: 0.95;
+    transform: rotate(-114.84deg);
+    border-radius: 50%;
+}
+
+.ellipse-1 {
+    left: -24vmin;
+    top: -8vmin;
+    background: rgba(237, 141, 204, 1);
+}
+
+.ellipse-2 {
+    left: -14vmin;
+    top: -18vmin;
+    background: rgba(255, 244, 207, 1);
+    mix-blend-mode: screen;
+    opacity: 0.9;
+}
+
+.ellipse-3 {
+    left: -6vmin;
+    top: -24vmin;
+    background: rgba(255, 244, 207, 1);
+    opacity: 0.7;
+}
+
+.ellipse-4 {
+    left: -34vmin;
+    top: 6vmin;
+    background: rgba(148, 107, 213, 1);
+    opacity: 0.9;
+}
+
 .login-outer-container {
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.37);
+    border-radius: 0;
+    background: transparent;
     display: inline-flex;
-    padding: 3rem;
+    padding: 0;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 3rem;
-    width: 42%;
+    gap: 2.5rem;
+    width: min(520px, 100%);
+    margin-left: auto;
 }
 
 .login-container {
@@ -59,22 +123,25 @@
 }
 
 .login-header-text {
-    color: #242a33;
-    font-family: "Anek Bangla", sans-serif;
-    font-size: 28px;
-    font-weight: 600;
+    color: #f3f1f7;
+    font-family: "Geist", "Plus Jakarta Sans", sans-serif;
+    font-size: 32px;
+    font-weight: 500;
     line-height: 36.48px;
-    letter-spacing: -0.84px;
+    letter-spacing: -0.03em;
     margin: 0;
     text-transform: capitalize;
 }
 
 .login-subheader-text {
-    color: #6a6e74;
-    font-family: "Plus Jakarta Sans", sans-serif;
-    font-size: 14px;
-    font-weight: 400;
+    color: rgba(255, 255, 255, 0.55);
+    font-family: "Geist", "Plus Jakarta Sans", sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 36.48px;
+    letter-spacing: -0.03em;
     margin: 6px 0 0 0;
+    text-transform: capitalize;
 }
 
 .login-form-container {
@@ -84,6 +151,63 @@
     width: 100%;
 }
 
+.otp-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    width: min(508px, 100%);
+}
+
+.otp-header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    width: 100%;
+}
+
+.otp-title {
+    margin: 0;
+    font-family: "Anek Bangla", sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: -0.03em;
+    text-transform: capitalize;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.otp-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    width: 100%;
+}
+
+.otp-subtext {
+    margin: 0;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.otp-email {
+    margin: 0;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: rgba(255, 255, 255, 0.85);
+}
 .input-group {
     display: flex;
     flex-direction: column;
@@ -92,7 +216,7 @@
 }
 
 .input-label {
-    color: #242a33;
+    color: rgba(255, 255, 255, 0.7);
     font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 14px;
     font-weight: 500;
@@ -101,8 +225,8 @@
 }
 
 .input-wrapper {
-    background-color: #ffffff;
-    border: 1px solid #f5f6f7;
+    background-color: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 44px;
     display: flex;
     align-items: center;
@@ -117,7 +241,7 @@
     outline: none;
     background: transparent;
     flex: 1;
-    color: #242a33;
+    color: #f5f4f8;
     font-family: "Plus Jakarta Sans", sans-serif;
     font-size: 16px;
     font-weight: 400;
@@ -125,7 +249,7 @@
 }
 
 .input-field::placeholder {
-    color: #888c92;
+    color: rgba(255, 255, 255, 0.45);
 }
 
 .password-toggle {
@@ -280,13 +404,15 @@
 }
 
 .resend-otp-link {
-    font-size: 14px;
-    color: #6b5a89;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
     cursor: pointer;
     font-family: "Inter", sans-serif;
-    font-weight: 500;
-    text-decoration: underline;
-    margin-top: 8px;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    width: 100%;
 }
 
 .resend-otp-link.disabled {
@@ -307,7 +433,7 @@
     flex-direction: row;
     align-items: flex-start;
     gap: 22.41px;
-    width: fit-content;
+    width: 100%;
 }
 
 .otp-input-box {
@@ -338,4 +464,17 @@
 .otp-input-box:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+    .auth-shell {
+        justify-content: center;
+        min-height: auto;
+        padding: clamp(110px, 14vw, 160px) 0 clamp(36px, 8vw, 64px);
+    }
+
+    .login-outer-container {
+        margin-left: 0;
+        width: min(520px, 100%);
+    }
 }

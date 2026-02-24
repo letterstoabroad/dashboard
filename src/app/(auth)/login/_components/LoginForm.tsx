@@ -39,7 +39,10 @@ const LoginForm: React.FC = (): React.ReactElement => {
     return (
         <AuthCard>
             <div className="login-header-container">
-                <h1 className="login-header-text">Sign In</h1>
+                <h1 className="login-header-text">Welcome To LTA</h1>
+                <p className="login-subheader-text">
+                    Your Abroad Journey Starts Here
+                </p>
             </div>
 
             <div className="login-form-container">

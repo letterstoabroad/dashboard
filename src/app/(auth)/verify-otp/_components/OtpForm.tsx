@@ -120,66 +120,68 @@ const OtpForm: React.FC = (): React.ReactElement => {
 
     return (
         <AuthCard>
-            <div className="login-header-container">
-                <h1 className="login-header-text">Please Check Your Inbox</h1>
-                <p className="login-subheader-text">
-                    {sendingOtp ? (
-                        "Sending OTP to your email..."
-                    ) : (
-                        <>
-                            Please enter the OTP we have sent to
-                            <br />
-                            <strong>{email}</strong>
-                        </>
-                    )}
-                </p>
-            </div>
-
-            <div className="login-form-container">
-                {/* OTP boxes */}
-                <div className="otp-input-row">
-                    {digits.map((digit, index) => (
-                        <input
-                            key={index}
-                            ref={(el) => { inputRefs.current[index] = el; }}
-                            type="text"
-                            inputMode="numeric"
-                            autoComplete={index === 0 ? "one-time-code" : "off"}
-                            pattern="\d*"
-                            maxLength={4}
-                            className="otp-input-box"
-                            value={digit}
-                            disabled={sendingOtp || resending}
-                            onChange={(e) => handleDigitChange(index, e.target.value)}
-                            onKeyDown={(e) => handleKeyDown(index, e)}
-                            onFocus={(e) => e.target.select()}
-                        />
-                    ))}
+            <div className="otp-content">
+                <div className="otp-header-container">
+                    <h1 className="otp-title">Please Check Your Inbox</h1>
+                    <div className="otp-message">
+                        {sendingOtp ? (
+                            <p className="otp-subtext">Sending OTP to your email...</p>
+                        ) : (
+                            <>
+                                <p className="otp-subtext">
+                                    Please enter the OTP we have sent to
+                                </p>
+                                <p className="otp-email">{email}</p>
+                            </>
+                        )}
+                    </div>
                 </div>
 
-                {error && <p className="error-text">{error}</p>}
-                {resendSuccess && (
-                    <p className="resend-success-text">OTP resent successfully.</p>
-                )}
-            </div>
+                <div className="login-form-container">
+                    {/* OTP boxes */}
+                    <div className="otp-input-row">
+                        {digits.map((digit, index) => (
+                            <input
+                                key={index}
+                                ref={(el) => { inputRefs.current[index] = el; }}
+                                type="text"
+                                inputMode="numeric"
+                                autoComplete={index === 0 ? "one-time-code" : "off"}
+                                pattern="\d*"
+                                maxLength={4}
+                                className="otp-input-box"
+                                value={digit}
+                                disabled={sendingOtp || resending}
+                                onChange={(e) => handleDigitChange(index, e.target.value)}
+                                onKeyDown={(e) => handleKeyDown(index, e)}
+                                onFocus={(e) => e.target.select()}
+                            />
+                        ))}
+                    </div>
 
-            <div
-                className={`create-account-btn ${loading || sendingOtp || resending ? "disabled" : ""}`}
-                onClick={onSubmit}
-            >
-        <span className="create-account-text">
-          {loading ? "Verifying..." : "Verify"}
-        </span>
-            </div>
+                    {error && <p className="error-text">{error}</p>}
+                    {resendSuccess && (
+                        <p className="resend-success-text">OTP resent successfully.</p>
+                    )}
+                </div>
 
-            <div
-                className={`resend-otp-link ${resending ? "disabled" : ""}`}
-                onClick={!resending ? onResend : undefined}
-            >
-                Didn&apos;t get your code?{" "}
-                <strong>Send a new OTP</strong>
+                <div
+                    className={`create-account-btn ${loading || sendingOtp || resending ? "disabled" : ""}`}
+                    onClick={onSubmit}
+                >
+                    <span className="create-account-text">
+                        {loading ? "Verifying..." : "Verify"}
+                    </span>
+                </div>
+
+                <div
+                    className={`resend-otp-link ${resending ? "disabled" : ""}`}
+                    onClick={!resending ? onResend : undefined}
+                >
+                    Didn&apos;t get your code?{" "}
+                    <strong>Send a new OTP</strong>
+                </div>
             </div>
-            
         </AuthCard>
     );
 };

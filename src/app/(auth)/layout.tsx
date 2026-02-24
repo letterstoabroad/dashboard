@@ -8,7 +8,21 @@ export default function AuthLayout({
 }) {
     return (
         <div className="layout-container-login">
-            {children}
+            <div className="auth-bg" aria-hidden="true">
+                <span className="auth-ellipse ellipse-1" />
+                <span className="auth-ellipse ellipse-2" />
+                <span className="auth-ellipse ellipse-3" />
+                <span className="auth-ellipse ellipse-4" />
+            </div>
+            <div className="auth-shell">
+                <div className="auth-shell-logo">
+                    <img
+                        src="/assets/icons/MainIcon.svg"
+                        alt="Letters to Abroad"
+                    />
+                </div>
+                {children}
+            </div>
         </div>
     );
 }
