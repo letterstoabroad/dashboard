@@ -38,7 +38,7 @@ const SignUpForm: React.FC = (): React.ReactElement => {
             <div className="login-header-container">
                 <h1 className="login-header-text">Welcome To LTA</h1>
                 <p className="login-subheader-text">
-                    Your Abroad Journey Starts Here
+                    Your Journey Abroad Starts Here
                 </p>
             </div>
 
