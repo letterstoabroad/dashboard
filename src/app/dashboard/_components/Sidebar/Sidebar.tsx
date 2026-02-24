@@ -85,7 +85,7 @@ const ProfileMenuItem: React.FC<{
                     />
                 </div>
             </div>
-            <span className="sidebar--menu-text">Profile</span>
+            {/*<span className="sidebar--menu-text">Profile</span>*/}
         </div>
     );
 };
