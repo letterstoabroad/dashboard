@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const publicRoutes = [
+  "/signup",
+  "/signup-otp",
   "/login",
   "/verify-otp",
   "/set-password",
@@ -17,7 +19,7 @@ export async function middleware(request: NextRequest) {
   console.log(pathname,token, isPublicRoute);
 
   if (!token && !isPublicRoute) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/signup", request.url));
   }
 
   if (token && isPublicRoute) {

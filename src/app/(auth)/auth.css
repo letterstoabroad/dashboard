@@ -321,13 +321,13 @@
 
 .divider-line {
     height: 1px;
-    background-color: #eaeaea;
+    background-color: rgba(255, 255, 255, 0.2);
     flex: 1;
     max-width: 194px;
 }
 
 .divider-text {
-    color: #242a33;
+    color: rgba(255, 255, 255, 0.6);
     font-family: "Inter", sans-serif;
     font-size: 12px;
     font-weight: 400;
@@ -349,7 +349,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border: 1px solid #eaeaea;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     background: #ffffff;
 }
 
@@ -367,7 +367,7 @@
 }
 
 .sign-in-text {
-    color: #242a33;
+    color: rgba(255, 255, 255, 0.7);
     font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
@@ -389,7 +389,7 @@
 }
 
 .terms-text {
-    color: #6a6e74;
+    color: rgba(255, 255, 255, 0.6);
     font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;

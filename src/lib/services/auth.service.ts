@@ -8,6 +8,11 @@ export interface LoginPayload {
     password: string;
 }
 
+export interface SignupPayload {
+    email: string;
+    password: string;
+}
+
 export interface SendOtpPayload {
     email: string;
     invite_token: string;
@@ -33,6 +38,11 @@ export interface LoginResponse {
     access: string;
     refresh: string;
     user: User;
+}
+
+export interface SignupResponse {
+    access?: string;
+    refresh?: string;
 }
 
 export interface OtpVerifyResponse {
@@ -77,4 +87,24 @@ export const loginUser = async (payload: LoginPayload): Promise<LoginResponse> =
     const { access, refresh } = response.data.data;
     setTokens(access, refresh);
     return response.data.data;
+};
+
+export const signupUser = async (payload: SignupPayload): Promise<SignupResponse> => {
+    const response = await api.post<{ status: boolean; data: SignupResponse }>(
+        "auth/signup/",
+        payload
+    );
+    const { access, refresh } = response.data.data || {};
+    if (access && refresh) {
+        setTokens(access, refresh);
+    }
+    return response.data.data;
+};
+
+export const submitSignupOtp = async (payload: { otp: string }): Promise<void> => {
+    await api.post("auth/signup/verify-otp/", payload);
+};
+
+export const resendSignupOtp = async (payload: { email: string }): Promise<void> => {
+    await api.post("auth/signup/resend-otp/", payload);
 };

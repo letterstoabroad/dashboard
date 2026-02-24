@@ -17,7 +17,7 @@ export default function AuthLayout({
             <div className="auth-shell">
                 <div className="auth-shell-logo">
                     <img
-                        src="/assets/icons/MainIcon.svg"
+                        src="/assets/icons/white-logo.png"
                         alt="Letters to Abroad"
                     />
                 </div>
