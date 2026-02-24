@@ -167,6 +167,11 @@ export default function DashboardPage(): React.ReactElement {
     });
 
     const platformType = user?.signup_platform_type || "dashboard";
+    const isEmailVerified = user?.is_email_verified ?? false;
+    const isOnboardingCompleted = user?.is_onboarding_completed ?? false;
+    const isApproved = user?.is_approved ?? false;
+    const hasAccess = isEmailVerified && isOnboardingCompleted && isApproved;
+    const effectivePlatformType = hasAccess ? "zenna_and_connect" : platformType;
     const firstName = user?.first_name?.split(" ")[0] || "";
     const greeting = `${getGreeting()}${firstName ? `, ${firstName}` : ""}!`;
 
@@ -194,7 +199,7 @@ export default function DashboardPage(): React.ReactElement {
             };
 
             // Only fetch what the current layout needs
-            if (platformType === "dashboard") {
+            if (!hasAccess || effectivePlatformType === "dashboard") {
                 fetches.push(
                     handleGetShortlistedCourses().then((r) => {
                         if (r.success && r.data) result.courses = r.data.results;
@@ -202,7 +207,10 @@ export default function DashboardPage(): React.ReactElement {
                 );
             }
 
-            if (platformType === "zenna" || platformType === "zenna_and_connect") {
+            if (
+                hasAccess
+                && (effectivePlatformType === "zenna" || effectivePlatformType === "zenna_and_connect")
+            ) {
                 fetches.push(
                     handleFetchApplications({id: user.id}).then((r) => {
                         if (r.success && r.data) result.applications = r.data.results;
@@ -229,14 +237,17 @@ export default function DashboardPage(): React.ReactElement {
         };
 
         fetchAll();
-    }, [user?.id, platformType]);
+    }, [user?.id, effectivePlatformType, hasAccess]);
 
     if (loading) return <PageLoader/>;
 
     const layoutProps = {greeting, data};
 
     const renderLayout = () => {
-        switch (platformType) {
+        if (!hasAccess) {
+            return <DefaultLayout {...layoutProps} />;
+        }
+        switch (effectivePlatformType) {
             case "connect":
                 return <ConnectLayout {...layoutProps} />;
             case "zenna":

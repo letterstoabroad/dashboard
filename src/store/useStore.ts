@@ -1,12 +1,16 @@
 import { create } from "zustand";
 
+
 export interface User {
     id: string;
     email: string;
+    is_email_verified: boolean;
     first_name: string;
     last_name: string;
     profile_picture: string;
     signup_platform_type: string;
+    is_onboarding_completed: boolean;
+    is_approved: boolean;
 }
 
 interface AuthState {
