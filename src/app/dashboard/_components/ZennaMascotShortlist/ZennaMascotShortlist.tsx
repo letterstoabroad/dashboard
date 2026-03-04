@@ -5,7 +5,7 @@ import "./ZennaMascotShortlist.css";
 const ZennaMascotShortlist: React.FC = () => {
     return (
         <Image
-            src="/assets/images/ZennaImage.png"
+            src="/assets/images/ZennaMascotRecommendationImage.png"
             alt="Zenna Mascot"
             className="lta-mascot--image"
             width={400}
