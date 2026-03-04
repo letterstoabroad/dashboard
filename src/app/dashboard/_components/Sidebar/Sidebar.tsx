@@ -64,10 +64,12 @@ const ProfileMenuItem: React.FC<{
     onClick: () => void;
 }> = ({ isActive, onClick }) => {
     const { user } = useStore();
+    const [failedSrc, setFailedSrc] = useState<string | null>(null);
+    const placeholderSrc = "/assets/images/profile-placeholder.svg";
+    const requestedSrc = user?.profile_picture || placeholderSrc;
 
-    const profileSrc = user?.profile_picture
-        ? user.profile_picture
-        : "/assets/images/default-avatar.png";
+    const profileSrc =
+        requestedSrc === failedSrc ? placeholderSrc : requestedSrc;
 
     return (
         <div
@@ -82,6 +84,7 @@ const ProfileMenuItem: React.FC<{
                         fill
                         sizes="20px"
                         className="sidebar--profile-avatar-img"
+                        onError={() => setFailedSrc(requestedSrc)}
                     />
                 </div>
             </div>

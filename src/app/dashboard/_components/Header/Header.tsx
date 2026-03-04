@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import "./Header.css";
 import LtaIcon from "@/app/dashboard/_components/LtaIcon/LtaIcon";
@@ -12,10 +12,12 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onMenuClick }): React.ReactElement => {
     const { user } = useStore();
+    const [failedSrc, setFailedSrc] = useState<string | null>(null);
+    const placeholderSrc = "/assets/images/profile-placeholder.svg";
+    const requestedSrc = user?.profile_picture || placeholderSrc;
 
-    const profileSrc = user?.profile_picture
-        ? user.profile_picture
-        : "/assets/images/default-avatar.png";
+    const profileSrc =
+        requestedSrc === failedSrc ? placeholderSrc : requestedSrc;
 
     const ProfilePicture = (
         <div className="header--profile-image-wrapper">
@@ -26,6 +28,7 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }): React.ReactElement => {
                 sizes="36px"
                 className="header--profile-image"
                 priority
+                onError={() => setFailedSrc(requestedSrc)}
             />
         </div>
     );
