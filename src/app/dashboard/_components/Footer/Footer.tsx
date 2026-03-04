@@ -11,18 +11,18 @@ const Footer: React.FC = () => {
           university truly fits you best.
         </p>
         <div className="footer--cta-row">
-          <button className="footer--btn-primary">Book a session</button>
-          <button className="footer--btn-secondary">
-            <div className="footer--icon-wrapper-whatsapp">
-              <Image
-                src="/assets/icons/WhatsappIcon.svg"
-                alt="WhatsApp"
-                width={18}
-                height={18}
-              />
-            </div>
-            <span className="footer--btn-text">Chat with a Mentor</span>
-          </button>
+          {/*<button className="footer--btn-primary">Book a session</button>*/}
+          {/*<button className="footer--btn-secondary">*/}
+          {/*  <div className="footer--icon-wrapper-whatsapp">*/}
+          {/*    <Image*/}
+          {/*      src="/assets/icons/WhatsappIcon.svg"*/}
+          {/*      alt="WhatsApp"*/}
+          {/*      width={18}*/}
+          {/*      height={18}*/}
+          {/*    />*/}
+          {/*  </div>*/}
+          {/*  <span className="footer--btn-text">Chat with a Mentor</span>*/}
+          {/*</button>*/}
         </div>
       </div>
 
