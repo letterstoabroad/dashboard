@@ -1,18 +1,27 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Sidebar from "@/app/dashboard/_components/Sidebar/Sidebar";
-import Header from "@/app/dashboard/_components/Header/Header";
+import React, { Suspense, useEffect } from "react";
+import PageLoader from "@/components/PageLoader/PageLoader";
+import { AppProvider } from "@/app/dashboard/_supernova/components/AppProvider";
+import AppShell from "@/app/dashboard/_supernova/components/AppShell";
+import SupernovaOverlays from "@/app/dashboard/_supernova/components/SupernovaOverlays";
+import { DemoDataProvider } from "@/app/dashboard/_supernova/demo/DemoDataProvider";
 import axiosInstance from "@/lib/axios";
 import useStore from "@/store/useStore";
+import "./_supernova/supernova.css";
+import "./_supernova/reference-fonts.css";
+import "./_supernova/button-motion.css";
 
+/**
+ * The shell shared by every dashboard page: the sidebar, dialogs and app
+ * state stay mounted while pages change, and only the page transitions.
+ */
 export default function DashboardLayout({
                                             children,
                                         }: {
     children: React.ReactNode;
 }): React.ReactElement {
     const { setUser } = useStore();
-    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -32,14 +41,16 @@ export default function DashboardLayout({
     }, [setUser]);
 
     return (
-        <div className="layout-container common--width-100">
-            <div className="common--flex-row common--width-100">
-                <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-                <div className="common--flex-col common--flex-1 common--gap-1">
-                    <Header onMenuClick={() => setSidebarOpen(true)} />
-                    {children}
-                </div>
-            </div>
-        </div>
+        // The app state reads the URL's query, so it renders under Suspense.
+        <Suspense fallback={<PageLoader/>}>
+            <DemoDataProvider>
+                <AppProvider>
+                    <div className="sn-root">
+                        <AppShell>{children}</AppShell>
+                        <SupernovaOverlays/>
+                    </div>
+                </AppProvider>
+            </DemoDataProvider>
+        </Suspense>
     );
 }

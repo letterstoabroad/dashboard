@@ -26,8 +26,8 @@ body {
 }
 
 :root {
-    --font-plus-jakarta-sans: "Plus Jakarta Sans", sans-serif;
-    --font-anek-bangla: "Anek Bangla", sans-serif;
+    /* --font-plus-jakarta-sans and --font-anek-bangla are supplied by
+       next/font in src/app/layout.tsx, which loads the actual font files. */
     --color-primary-bg: #ffffff;
     --color-primary-text: #171717;
 }
@@ -60,28 +60,45 @@ body,
     box-sizing: border-box;
 }
 
-.layout-container {
-    display: flex;
-    background: linear-gradient(
-            172deg,
-            #ccc4dc -15.87%,
-            #e5dfdf -7.37%,
-            #f6f3eb 33.95%,
-            #fff 68.38%
-    ),
-    url(/assets/images/background.png) lightgray -19.54px -266.052px /
-      102.714% 71.608% no-repeat;
-    height: 100vh;
-    width: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 1rem;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+/* Dashboard page changes (see <ViewTransition> in the dashboard's AppShell): the old page
+   fades out quickly while the new one fades in and settles upward. The
+   sidebar and header stay still; the rest cross-fades briefly (e.g. the
+   active sidebar item). */
+::view-transition-group(.dashboard-page) {
+    animation: none;
 }
 
-.layout-container::-webkit-scrollbar {
-    display: none;
+::view-transition-old(.dashboard-page) {
+    animation: 140ms ease-in both dashboard-page-out;
+}
+
+::view-transition-new(.dashboard-page) {
+    animation: 280ms cubic-bezier(0.2, 0.8, 0.2, 1) 40ms both dashboard-page-in;
+}
+
+::view-transition-group(root) {
+    animation-duration: 180ms;
+}
+
+@keyframes dashboard-page-out {
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes dashboard-page-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+        animation: none !important;
+    }
 }
 
 .layout-container-login {
@@ -108,214 +125,4 @@ body,
 
 .layout-container-login::-webkit-scrollbar {
     display: none;
-}
-
-.main-section-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    height: 100vh;
-    width: 100%;
-    border-radius: 24px;
-    background: rgba(255, 255, 255, 0.35);
-    padding: 1rem;
-    gap: 2.5rem;
-    overflow-y: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.main-section-container::-webkit-scrollbar {
-    display: none;
-}
-
-.main--header-style {
-    align-self: flex-start;
-    margin: 0;
-    color: var(--Text-Grey-800, #242a33);
-    text-align: center;
-    font-family: "Anek Bangla";
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 36px;
-    letter-spacing: -0.84px;
-    text-transform: capitalize;
-}
-
-.main--sub-header-style {
-    color: var(--Text-Grey-800, #242a33);
-    font-family: "Plus Jakarta Sans";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-}
-
-.main--footer-caption {
-    color: var(--Text-Grey-800, #242a33);
-    font-family: "Plus Jakarta Sans";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 24px;
-}
-
-/* Common App Styles */
-.common--width-100 {
-    width: 100%;
-}
-
-.common--margin-0 {
-    margin: 0;
-}
-
-.common--flex-row {
-    display: flex;
-    flex-direction: row;
-}
-
-@media (max-width: 768px) {
-    .common--flex-row {
-        flex-wrap: wrap;
-    }
-}
-
-.common--flex-col {
-    display: flex;
-    flex-direction: column;
-}
-
-.common--align-center {
-    align-items: center;
-}
-
-.common--align-start {
-    align-items: flex-start;
-}
-
-.common--justify-center {
-    justify-content: center;
-}
-
-.common--justify-start {
-    justify-content: flex-start;
-}
-
-.common--justify-between {
-    justify-content: space-between;
-}
-
-.common--justify-evenly {
-    justify-content: space-evenly;
-}
-
-.common--gap-1 {
-    gap: 1rem;
-}
-
-.common--margin-top-auto {
-    margin-top: auto;
-}
-
-.common--flex-1 {
-    flex: 1;
-    min-width: 0;
-}
-
-.layout--default-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid rgba(0, 0, 0, 0.1);
-    border-top-color: #8764de; /* Matches your theme color */
-    border-radius: 50%;
-    animation: spinner-rotate 0.8s linear infinite;
-}
-
-@keyframes spinner-rotate {
-    to {
-        transform: rotate(360deg);
-    }
-}
-.default--suit-plane-row {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    gap: 18px;
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .default--suit-plane-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}
-
-
-.zenna--suit-plane-row {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 10px;
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .zenna--suit-plane-row {
-        flex-direction: column;
-    }
-}
-
-.zenna--greeting-stats-row {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .zenna--greeting-stats-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-}
-
-@media (max-width: 768px) {
-    .zenna-connect--greeting-stats-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .zenna-connect--greeting-stats-row > .stats--container {
-        width: 100%;
-        justify-content: flex-start;
-    }
-
-    .zenna-connect--suit-session-row {
-        flex-direction: column;
-        align-items: stretch;
-    }
-}
-
-.zenna-connect--suit-session-row > * {
-    flex: 1;
-    min-width: 0;
-}
-.default--plane-shortlist-row {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .default--plane-shortlist-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
 }
